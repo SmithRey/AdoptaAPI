@@ -1,0 +1,40 @@
+## .NET
+bin/
+obj/
+*.user
+*.userosscache
+*.suo
+*.userprefs
+.vs/
+*.rsuser
+
+## Build
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Bb]uild/
+artifacts/
+
+## NuGet
+*.nupkg
+**/packages/*
+!**/packages/build/
+
+## Secrets / local
+appsettings.*.local.json
+*.pfx
+*.publishsettings
+
+## OS / IDE
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+## Archives
+*.zip
+*.rar
+*.7z

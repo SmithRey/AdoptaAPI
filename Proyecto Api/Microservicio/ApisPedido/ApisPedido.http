@@ -1,0 +1,24 @@
+@ApisPedido_HostAddress = http://localhost:5052
+
+GET {{ApisPedido_HostAddress}}/api/salud
+Accept: application/json
+
+###
+
+GET {{ApisPedido_HostAddress}}/api/mascotas
+Accept: application/json
+
+###
+
+GET {{ApisPedido_HostAddress}}/api/mascotas/disponibles
+Accept: application/json
+
+###
+
+POST {{ApisPedido_HostAddress}}/api/pedido
+Content-Type: application/json
+
+{
+  "producto": "Martillo",
+  "precio": 150
+}
