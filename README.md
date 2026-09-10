@@ -3,6 +3,21 @@
 API .NET 8 para adopción de mascotas (proyecto Profe Richi).  
 **Sprint 0:** solución base, EF Core, Swagger y Git.
 
+Repo público (se abre en el navegador, sin clonar): https://github.com/SmithRey/AdoptaAPI
+
+## Evidencias Sprint 0 (Quiz Corte II)
+
+Los enlaces de Jira, Figma y `localhost:7133` **no son accesibles** para quien no tenga cuenta o no tenga la API corriendo en su PC. La evidencia equivalente está en este repo:
+
+| Entregable | Enlace público |
+|---|---|
+| Carpeta de evidencias | [docs/evidencias](docs/evidencias/README.md) |
+| Jira — T-01 a T-06 finalizadas | [01-jira-tareas-finalizadas.png](docs/evidencias/01-jira-tareas-finalizadas.png) |
+| Swagger UI — AdoptaAPI v1 | [02-swagger-adoptaapi.png](docs/evidencias/02-swagger-adoptaapi.png) |
+| Figma Make — app Patitas | [03-figma-make-patitas.png](docs/evidencias/03-figma-make-patitas.png) |
+| Figma — wireframes Sprint 0 | [04-figma-wireframes-sprint0.png](docs/evidencias/04-figma-wireframes-sprint0.png) |
+| Contrato OpenAPI 3.0 | [swagger-v1.json](docs/evidencias/swagger-v1.json) |
+
 ## Requisitos
 
 - .NET 8 SDK
