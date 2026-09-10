@@ -1,0 +1,14 @@
+@AdoptaAPI_HostAddress = http://localhost:5052
+
+GET {{AdoptaAPI_HostAddress}}/api/salud
+Accept: application/json
+
+###
+
+GET {{AdoptaAPI_HostAddress}}/api/mascotas
+Accept: application/json
+
+###
+
+GET {{AdoptaAPI_HostAddress}}/api/mascotas/disponibles
+Accept: application/json

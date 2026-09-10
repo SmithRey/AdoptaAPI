@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace ApisPedido.Data.Migrations
+namespace AdoptaAPI.Data.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration

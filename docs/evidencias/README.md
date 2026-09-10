@@ -32,7 +32,7 @@ Tareas visibles en la captura: T-01 solución .NET 8, T-02 Git, T-03 EF Core, T-
 
 ![Swagger UI de AdoptaAPI v1](./02-swagger-adoptaapi.png)
 
-Endpoints documentados: `GET /api/Mascotas`, `GET /api/Mascotas/disponibles`, `POST /api/Pedido`, `GET /api/Salud`.
+Endpoints de AdoptaAPI: `GET /api/Salud`, `GET /api/Mascotas`, `GET /api/Mascotas/disponibles`.
 
 ### Figma Make
 

@@ -1,4 +1,4 @@
-namespace ApisPedido.Models
+﻿namespace AdoptaAPI.Models
 {
     public class SolicitudAdopcion
     {

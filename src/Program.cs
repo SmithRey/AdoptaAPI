@@ -1,5 +1,5 @@
 using System.Text.Json.Serialization;
-using ApisPedido.Data;
+using AdoptaAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -9,8 +9,6 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 });
-builder.Services.AddHttpClient();
-builder.Services.AddTransient(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient());
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {

@@ -1,7 +1,7 @@
-using ApisPedido.Models;
+﻿using AdoptaAPI.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace ApisPedido.Data
+namespace AdoptaAPI.Data
 {
     public class AdoptaDbContext : DbContext
     {

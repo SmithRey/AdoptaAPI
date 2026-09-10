@@ -1,0 +1,517 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+<meta charset="utf-8">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 15">
+<title>AdoptaAPI - Documento de Diseño y Planificación</title>
+<!--[if gte mso 9]><xml>
+<w:WordDocument>
+<w:View>Print</w:View>
+<w:Zoom>100</w:Zoom>
+</w:WordDocument>
+</xml><![endif]-->
+<style>
+@page { size: 21cm 29.7cm; margin: 2.5cm; }
+body { font-family: Calibri, Arial, sans-serif; font-size: 11pt; line-height: 1.4; }
+h1 { font-size: 18pt; color: #1F4E79; border-bottom: 2px solid #1F4E79; padding-bottom: 4px; page-break-before: always; }
+h1.first { page-break-before: avoid; }
+h2 { font-size: 14pt; color: #2E75B6; margin-top: 18px; }
+h3 { font-size: 12pt; color: #404040; margin-top: 12px; }
+table { border-collapse: collapse; width: 100%; margin: 10px 0 16px 0; }
+th { background-color: #1F4E79; color: white; padding: 6px 8px; text-align: left; font-size: 10pt; }
+td { border: 1px solid #BFBFBF; padding: 5px 8px; font-size: 10pt; vertical-align: top; }
+tr:nth-child(even) td { background-color: #F2F7FB; }
+.cover { text-align: center; margin-top: 80px; }
+.cover h1 { border: none; font-size: 28pt; page-break-before: avoid; }
+.cover p { font-size: 13pt; color: #404040; }
+.story { background: #FAFAFA; border-left: 4px solid #2E75B6; padding: 10px 14px; margin: 10px 0; }
+.criteria { margin-left: 20px; }
+pre { font-family: Consolas, monospace; font-size: 9pt; background: #F5F5F5; border: 1px solid #DDD; padding: 10px; white-space: pre-wrap; }
+.pagebreak { page-break-before: always; }
+ul { margin: 6px 0; }
+li { margin: 3px 0; }
+.meta td:first-child { font-weight: bold; width: 30%; background: #E8F0FE; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+<h1 class="first">AdoptaAPI</h1>
+<p><b>Documento de Diseño y Planificación</b></p>
+<p>Sistema de Gestión de Adopción de Mascotas</p>
+<p>Versión 1.0 — Agosto 2026</p>
+<br/>
+<table class="meta">
+<tr><td>Stack</td><td>ASP.NET Core MVC 8 · C# · JavaScript · SQL Server · Azure</td></tr>
+<tr><td>Arquitectura</td><td>MVC en capas (Presentation · Business Logic · Data Access)</td></tr>
+<tr><td>Metodología</td><td>Agile / Scrum</td></tr>
+<tr><td>Equipo</td><td>Samanta Rojas, Killiam García, Jonnathan Rey, Santiago Cuervo (4 integrantes)</td></tr>
+</table>
+</div>
+
+<h1 class="first">1. Contexto y Objetivos</h1>
+
+<h2>1.1 Objetivo General</h2>
+<p>Desarrollar una <b>API REST</b> que centralice y digitalice el proceso de <b>publicación, búsqueda y seguimiento de adopciones de mascotas</b>, conectando de forma ágil y trazable a fundaciones de rescate animal con potenciales adoptantes, sustituyendo la gestión desorganizada actual basada en redes sociales.</p>
+
+<h2>1.2 Objetivos Específicos</h2>
+<table>
+<tr><th>ID</th><th>Objetivo</th></tr>
+<tr><td>OE-01</td><td>Diseñar y documentar una API REST bajo Swagger para registrar, consultar y actualizar fichas de mascotas</td></tr>
+<tr><td>OE-02</td><td>Implementar filtrado de mascotas por especie, edad, tamaño y ciudad</td></tr>
+<tr><td>OE-03</td><td>Desarrollar un flujo de solicitud de adopción con estados trazables (pendiente, en revisión, aprobada, rechazada, completada)</td></tr>
+<tr><td>OE-04</td><td>Generar reportes para que las fundaciones visualicen mascotas disponibles vs. adoptadas</td></tr>
+<tr><td>OE-05</td><td>Proveer Swagger UI para pruebas en vivo y, opcionalmente, un SDK generado con Swagger Codegen</td></tr>
+</table>
+
+<h2>1.3 Descripción del Problema</h2>
+<p>En Colombia, cerca del <b>58% de los hogares</b> tiene al menos una mascota, pero la red de rescate es <b>informal y atomizada</b>. La información queda dispersa en redes sociales sin control centralizado ni actualización automática de estados.</p>
+<ul>
+<li><b>Dispersión informativa</b> — el adoptante debe revisar decenas de perfiles y grupos.</li>
+<li><b>Falta de confianza</b> — no existe un registro verificable de rescatistas legítimos.</li>
+<li><b>Proceso lento e intrazable</b> — las solicitudes se gestionan por mensajes privados, saturando refugios.</li>
+</ul>
+
+<h1>2. Alcance</h1>
+
+<h2>2.1 Incluye</h2>
+<ul>
+<li>API REST con endpoints para usuarios, mascotas, solicitudes y reportes</li>
+<li>Autenticación básica por rol (fundación / adoptante)</li>
+<li>Filtros de búsqueda (especie, edad, tamaño, ciudad, estado)</li>
+<li>Documentación interactiva con Swagger UI</li>
+<li>Modelo de datos relacional en SQL Server</li>
+<li>Interfaz web MVC como cliente de la API</li>
+<li>Mockups navegables en Figma</li>
+</ul>
+
+<h2>2.2 No incluye</h2>
+<ul>
+<li>Pasarela de pagos o donaciones</li>
+<li>Notificaciones push en tiempo real</li>
+<li>Aplicación móvil nativa (solo diseño responsive en mockups)</li>
+<li>Verificación legal o judicial del proceso de adopción</li>
+</ul>
+
+<h1>3. Épicas y Módulos</h1>
+
+<table>
+<tr><th>Épica</th><th>Módulo</th><th>Descripción</th><th>Prioridad</th><th>Sprint</th></tr>
+<tr><td>E-01</td><td>Autenticación y Usuarios</td><td>Registro, login y gestión de roles</td><td>Alta</td><td>Sprint 1</td></tr>
+<tr><td>E-02</td><td>Gestión de Mascotas</td><td>CRUD de fichas con filtros de búsqueda</td><td>Alta</td><td>Sprint 1</td></tr>
+<tr><td>E-03</td><td>Solicitudes de Adopción</td><td>Flujo con máquina de estados trazable</td><td>Alta</td><td>Sprint 2</td></tr>
+<tr><td>E-04</td><td>Reportes e Impacto</td><td>Dashboard de métricas para fundaciones</td><td>Media</td><td>Sprint 2</td></tr>
+<tr><td>E-05</td><td>Documentación API</td><td>Swagger UI, OpenAPI spec</td><td>Media</td><td>Sprint 3</td></tr>
+<tr><td>E-06</td><td>Interfaz Web y UX</td><td>Vistas MVC + mockups Figma</td><td>Media</td><td>Sprint 1–3</td></tr>
+</table>
+
+<h2>Desglose por módulo</h2>
+<pre>E-01 Autenticación          E-02 Mascotas              E-03 Solicitudes
+ ├── Registro fundaciones    ├── Publicar ficha          ├── Crear solicitud
+ ├── Registro adoptantes     ├── Listado con filtros     ├── Consultar solicitudes
+ ├── Login con JWT           ├── Ver detalle             ├── Cambiar estado
+ └── Autorización por rol    └── Actualizar / eliminar   └── Rechazo automático
+
+E-04 Reportes               E-05 Documentación          E-06 Interfaz Web
+ ├── Totales por estado      ├── Swashbuckle             ├── Inicio y listado
+ ├── Adopciones por periodo  ├── Anotaciones XML         ├── Detalle y solicitud
+ └── Impacto fundación       └── Swagger UI              └── Panel fundación + Figma</pre>
+
+<h1>4. Historias de Usuario</h1>
+
+<h2>Módulo E-01 — Autenticación y Usuarios</h2>
+
+<div class="story">
+<h3>HU-01 — Registro de fundación</h3>
+<p><i>Como</i> fundación de rescate animal, <i>quiero</i> registrarme con los datos de mi organización, <i>para</i> poder publicar mascotas en la plataforma.</p>
+<p><b>Criterios de aceptación:</b></p>
+<ul class="criteria">
+<li>Formulario: nombre, email, contraseña, ciudad, nombre de organización</li>
+<li>Email único en el sistema</li>
+<li>Contraseña almacenada hasheada (BCrypt / Identity)</li>
+<li>Tipo de usuario: Fundacion</li>
+<li>Retorna HTTP 201 sin contraseña</li>
+</ul>
+</div>
+
+<div class="story">
+<h3>HU-02 — Registro de adoptante</h3>
+<p><i>Como</i> persona interesada en adoptar, <i>quiero</i> registrarme, <i>para</i> enviar solicitudes de adopción.</p>
+<p><b>Criterios de aceptación:</b></p>
+<ul class="criteria">
+<li>Formulario: nombre, email, contraseña, ciudad</li>
+<li>Email único; tipo Adoptante; HTTP 201</li>
+</ul>
+</div>
+
+<div class="story">
+<h3>HU-03 — Inicio de sesión</h3>
+<p><i>Como</i> usuario registrado, <i>quiero</i> iniciar sesión, <i>para</i> acceder según mi rol.</p>
+<p><b>Criterios de aceptación:</b></p>
+<ul class="criteria">
+<li>Retorna JWT con claims userId, email, rol</li>
+<li>Credenciales inválidas: HTTP 401</li>
+<li>Endpoints protegidos rechazan token inválido/expirado</li>
+</ul>
+</div>
+
+<h2>Módulo E-02 — Gestión de Mascotas</h2>
+
+<div class="story">
+<h3>HU-04 — Publicar mascota</h3>
+<p><i>Como</i> fundación autenticada, <i>quiero</i> publicar una ficha, <i>para</i> que adoptantes la encuentren.</p>
+<ul class="criteria">
+<li>Campos: nombre, especie, edad (meses), tamaño, ciudad, descripción (+ raza, foto opcionales)</li>
+<li>Estado inicial: Disponible; solo rol Fundacion; HTTP 201</li>
+</ul>
+</div>
+
+<div class="story">
+<h3>HU-05 — Buscar mascotas con filtros</h3>
+<p><i>Como</i> adoptante o visitante, <i>quiero</i> buscar con filtros, <i>para</i> encontrar la mascota ideal.</p>
+<ul class="criteria">
+<li>Filtros: especie, edad, tamaño, ciudad, estado (combinables)</li>
+<li>Paginación; endpoint público</li>
+</ul>
+</div>
+
+<div class="story">
+<h3>HU-06 — Actualizar o eliminar mascota</h3>
+<p><i>Como</i> fundación, <i>quiero</i> editar o eliminar mis fichas, <i>para</i> mantener información actualizada.</p>
+<ul class="criteria">
+<li>Solo la fundación propietaria; no eliminar con solicitudes EnRevision/Aprobada</li>
+<li>Al eliminar, rechazar solicitudes pendientes automáticamente</li>
+</ul>
+</div>
+
+<div class="story">
+<h3>HU-07 — Ver detalle de mascota</h3>
+<p><i>Como</i> adoptante, <i>quiero</i> ver información completa, <i>para</i> decidir si solicito adopción.</p>
+<ul class="criteria">
+<li>Incluye datos de fundación; endpoint público; HTTP 404 si no existe</li>
+</ul>
+</div>
+
+<h2>Módulo E-03 — Solicitudes de Adopción</h2>
+
+<div class="story">
+<h3>HU-08 — Enviar solicitud de adopción</h3>
+<p><i>Como</i> adoptante autenticado, <i>quiero</i> enviar una solicitud, <i>para</i> iniciar el proceso formal.</p>
+<ul class="criteria">
+<li>Estado inicial Pendiente; mascota debe estar Disponible</li>
+<li>Una solicitud activa por mascota/adoptante; mascota pasa a EnProceso; HTTP 201</li>
+</ul>
+</div>
+
+<div class="story">
+<h3>HU-09 — Gestionar solicitudes (fundación)</h3>
+<p><i>Como</i> fundación, <i>quiero</i> cambiar el estado de solicitudes, <i>para</i> gestionar adopciones.</p>
+<ul class="criteria">
+<li>Transiciones: Pendiente → EnRevision → Aprobada|Rechazada → Completada</li>
+<li>Al aprobar: mascota Adoptada; rechazar otras solicitudes activas</li>
+<li>Transiciones inválidas: HTTP 422</li>
+</ul>
+</div>
+
+<div class="story">
+<h3>HU-10 — Consultar mis solicitudes</h3>
+<p><i>Como</i> adoptante, <i>quiero</i> ver el estado de mis solicitudes, <i>para</i> hacer seguimiento.</p>
+<ul class="criteria">
+<li>Solo solicitudes del adoptante autenticado; ordenadas por fecha descendente</li>
+</ul>
+</div>
+
+<h2>Módulo E-04 — Reportes</h2>
+
+<div class="story">
+<h3>HU-11 — Reporte de impacto</h3>
+<p><i>Como</i> fundación, <i>quiero</i> ver un reporte de mis mascotas, <i>para</i> medir mi impacto.</p>
+<ul class="criteria">
+<li>Totales: disponibles, en proceso, adoptadas; adopciones por rango de fechas</li>
+</ul>
+</div>
+
+<h2>Módulo E-05 y E-06</h2>
+
+<div class="story">
+<h3>HU-12 — Probar API en Swagger UI</h3>
+<p>Swagger en /swagger; JWT configurable; OpenAPI 3.0 exportable.</p>
+</div>
+
+<div class="story">
+<h3>HU-13 — Mockups navegables en Figma</h3>
+<p>Flujo completo responsive: inicio, listado, detalle, login, registro, solicitud, panel fundación.</p>
+</div>
+
+<h1>5. Tareas Detalladas</h1>
+
+<h2>Sprint 0 — Configuración inicial (Semana 1)</h2>
+<table>
+<tr><th>ID</th><th>Tarea</th><th>Épica</th><th>Responsable</th><th>Est.</th></tr>
+<tr><td>T-01</td><td>Crear solución .NET 8 (Web, Api, Business, Data, Shared)</td><td>—</td><td>Backend</td><td>4h</td></tr>
+<tr><td>T-02</td><td>Configurar EF Core + SQL Server</td><td>E-02</td><td>Backend</td><td>3h</td></tr>
+<tr><td>T-03</td><td>Entidades y migración inicial</td><td>E-02</td><td>Backend</td><td>4h</td></tr>
+<tr><td>T-04</td><td>Configurar Swashbuckle (Swagger)</td><td>E-05</td><td>Backend</td><td>2h</td></tr>
+<tr><td>T-05</td><td>Repositorio Git + README</td><td>—</td><td>Todos</td><td>1h</td></tr>
+<tr><td>T-06</td><td>Wireframes base en Figma</td><td>E-06</td><td>Frontend/UX</td><td>6h</td></tr>
+</table>
+
+<h2>Sprint 1 — Autenticación + Mascotas (Semanas 2–3)</h2>
+<table>
+<tr><th>ID</th><th>Tarea</th><th>Historia</th><th>Detalle</th><th>Est.</th></tr>
+<tr><td>T-07</td><td>AuthService + AuthController</td><td>HU-01–03</td><td>Registro, login, JWT</td><td>8h</td></tr>
+<tr><td>T-08</td><td>Middleware autorización por rol</td><td>HU-03</td><td>[Authorize(Roles)]</td><td>3h</td></tr>
+<tr><td>T-09</td><td>MascotaService + Controller</td><td>HU-04, HU-06</td><td>CRUD + propiedad</td><td>8h</td></tr>
+<tr><td>T-10</td><td>Filtros y paginación GET /mascotas</td><td>HU-05</td><td>LINQ dinámico</td><td>5h</td></tr>
+<tr><td>T-11</td><td>GET /mascotas/{id}</td><td>HU-07</td><td>Con datos fundación</td><td>2h</td></tr>
+<tr><td>T-12</td><td>Vistas MVC: Home, Listado, Detalle</td><td>HU-05, HU-07</td><td>Razor + fetch</td><td>10h</td></tr>
+<tr><td>T-13</td><td>Vistas MVC: Login y Registro</td><td>HU-01–03</td><td>Formularios + token</td><td>6h</td></tr>
+<tr><td>T-14</td><td>Diagrama de Casos de Uso</td><td>—</td><td>docs/diagrams/</td><td>3h</td></tr>
+<tr><td>T-15</td><td>Diagrama de Clases</td><td>—</td><td>docs/diagrams/</td><td>4h</td></tr>
+</table>
+
+<h2>Sprint 2 — Solicitudes + Reportes (Semanas 4–5)</h2>
+<table>
+<tr><th>ID</th><th>Tarea</th><th>Historia</th><th>Detalle</th><th>Est.</th></tr>
+<tr><td>T-16</td><td>SolicitudService + máquina de estados</td><td>HU-08, HU-09</td><td>Transiciones + rechazo concurrente</td><td>10h</td></tr>
+<tr><td>T-17</td><td>SolicitudesController</td><td>HU-08–10</td><td>POST, GET, PUT</td><td>6h</td></tr>
+<tr><td>T-18</td><td>Cambio estado mascota al aprobar/rechazar</td><td>HU-09</td><td>Transacción atómica</td><td>4h</td></tr>
+<tr><td>T-19</td><td>ReporteService + Controller</td><td>HU-11</td><td>Agregaciones LINQ</td><td>5h</td></tr>
+<tr><td>T-20</td><td>Vista: formulario solicitud</td><td>HU-08</td><td>Modal o página</td><td>4h</td></tr>
+<tr><td>T-21</td><td>Vista: panel fundación</td><td>HU-09, HU-11</td><td>Dashboard tabs</td><td>10h</td></tr>
+<tr><td>T-22</td><td>Vista: mis solicitudes</td><td>HU-10</td><td>Badges de estado</td><td>4h</td></tr>
+<tr><td>T-23</td><td>Diagrama de Secuencia</td><td>—</td><td>Flujo adopción</td><td>3h</td></tr>
+<tr><td>T-24</td><td>Diagrama de Componentes</td><td>—</td><td>Arquitectura capas</td><td>4h</td></tr>
+</table>
+
+<h2>Sprint 3 — Documentación + Despliegue (Semana 6)</h2>
+<table>
+<tr><th>ID</th><th>Tarea</th><th>Historia</th><th>Detalle</th><th>Est.</th></tr>
+<tr><td>T-25</td><td>Anotaciones XML en controllers</td><td>HU-12</td><td>Swagger completo</td><td>4h</td></tr>
+<tr><td>T-26</td><td>Pruebas unitarias</td><td>—</td><td>xUnit + Moq</td><td>8h</td></tr>
+<tr><td>T-27</td><td>Pruebas de integración</td><td>—</td><td>WebApplicationFactory</td><td>6h</td></tr>
+<tr><td>T-28</td><td>Mockups Figma finales</td><td>HU-13</td><td>Flujo completo</td><td>8h</td></tr>
+<tr><td>T-29</td><td>Despliegue Azure</td><td>—</td><td>App Service + SQL Azure</td><td>6h</td></tr>
+<tr><td>T-30</td><td>Demo + README</td><td>—</td><td>Documentación setup</td><td>3h</td></tr>
+</table>
+
+<h1>6. Modelo de Datos</h1>
+
+<h2>6.1 Entidades principales</h2>
+<table>
+<tr><th>Entidad</th><th>Campos clave</th><th>Relaciones</th></tr>
+<tr><td>USUARIO</td><td>Id, Nombre, Email (UK), PasswordHash, TipoUsuario, Ciudad, FechaRegistro, Activo</td><td>1:0..1 FUNDACION; 1:N SOLICITUD</td></tr>
+<tr><td>FUNDACION</td><td>Id, UsuarioId (FK UK), NombreOrganizacion, Descripcion, Telefono, Verificada</td><td>1:N MASCOTA</td></tr>
+<tr><td>MASCOTA</td><td>Id, FundacionId, Nombre, Especie, Raza, EdadMeses, Tamano, Ciudad, Descripcion, FotoUrl, Estado</td><td>1:N SOLICITUD</td></tr>
+<tr><td>SOLICITUD_ADOPCION</td><td>Id, MascotaId, AdoptanteId, Estado, Mensaje, FechaSolicitud, FechaActualizacion</td><td>N:1 MASCOTA, USUARIO</td></tr>
+</table>
+
+<h2>6.2 Enumeraciones</h2>
+<pre>TipoUsuario     { Fundacion, Adoptante }
+TamanoMascota   { Pequeno, Mediano, Grande }
+EstadoMascota   { Disponible, EnProceso, Adoptada }
+EstadoSolicitud { Pendiente, EnRevision, Aprobada, Rechazada, Completada }</pre>
+
+<h2>6.3 Reglas de negocio</h2>
+<table>
+<tr><th>Regla</th><th>Descripción</th></tr>
+<tr><td>RN-01</td><td>Usuario Fundacion tiene exactamente un registro en FUNDACION</td></tr>
+<tr><td>RN-02</td><td>Una mascota solo puede tener una solicitud Aprobada o Completada</td></tr>
+<tr><td>RN-03</td><td>Al aprobar, las demás solicitudes activas pasan a Rechazada</td></tr>
+<tr><td>RN-04</td><td>Mascota Adoptada no acepta nuevas solicitudes</td></tr>
+<tr><td>RN-05</td><td>Email único en todo el sistema</td></tr>
+<tr><td>RN-06</td><td>Índice compuesto MASCOTA(Especie, Ciudad, Estado)</td></tr>
+</table>
+
+<h2>6.4 Máquina de estados — Solicitud</h2>
+<pre>[*] → Pendiente → EnRevision → Aprobada → Completada
+              ↘ Rechazada → [*]
+EnRevision → Rechazada → [*]</pre>
+
+<h1>7. Diagrama de Casos de Uso</h1>
+
+<h2>7.1 Actores</h2>
+<table>
+<tr><th>Actor</th><th>Descripción</th></tr>
+<tr><td>Adoptante</td><td>Usuario registrado que busca y solicita adopciones</td></tr>
+<tr><td>Fundación</td><td>Organización que publica mascotas y gestiona solicitudes</td></tr>
+<tr><td>Visitante</td><td>Usuario no autenticado; puede buscar y ver mascotas</td></tr>
+<tr><td>Desarrollador</td><td>Prueba la API via Swagger UI</td></tr>
+</table>
+
+<h2>7.2 Casos de uso por módulo</h2>
+<table>
+<tr><th>Módulo</th><th>Casos de uso</th><th>Actor</th></tr>
+<tr><td>Autenticación</td><td>UC-01 Registrarse adoptante, UC-02 Registrarse fundación, UC-03 Login, UC-04 Logout</td><td>Adoptante / Fundación</td></tr>
+<tr><td>Mascotas</td><td>UC-05 Publicar, UC-06 Buscar filtros, UC-07 Ver detalle, UC-08 Actualizar, UC-09 Eliminar</td><td>Fundación / Visitante</td></tr>
+<tr><td>Adopción</td><td>UC-10 Enviar solicitud, UC-11 Mis solicitudes, UC-12 Revisar solicitudes, UC-13 Cambiar estado</td><td>Adoptante / Fundación</td></tr>
+<tr><td>Reportes</td><td>UC-14 Ver reporte de impacto</td><td>Fundación</td></tr>
+<tr><td>Documentación</td><td>UC-15 Probar en Swagger UI</td><td>Desarrollador</td></tr>
+</table>
+
+<h2>7.3 Casos principales</h2>
+<table>
+<tr><th>Caso</th><th>Actor</th><th>Precondición</th><th>Postcondición</th></tr>
+<tr><td>UC-10 Enviar solicitud</td><td>Adoptante</td><td>Autenticado; mascota Disponible</td><td>Solicitud Pendiente; mascota EnProceso</td></tr>
+<tr><td>UC-13 Cambiar estado</td><td>Fundación</td><td>Solicitud de su mascota</td><td>Estado actualizado; mascota actualizada</td></tr>
+<tr><td>UC-06 Buscar mascotas</td><td>Visitante</td><td>Ninguna</td><td>Listado paginado mostrado</td></tr>
+</table>
+
+<h1>8. Diagrama de Clases</h1>
+
+<h2>8.1 Clases de dominio</h2>
+<table>
+<tr><th>Clase</th><th>Atributos</th><th>Relaciones</th></tr>
+<tr><td>Usuario</td><td>Id, Nombre, Email, PasswordHash, Tipo, Ciudad, FechaRegistro, Activo</td><td>1→0..1 Fundacion; 1→* SolicitudAdopcion</td></tr>
+<tr><td>Fundacion</td><td>Id, UsuarioId, NombreOrganizacion, Descripcion, Telefono, Verificada</td><td>1→* Mascota</td></tr>
+<tr><td>Mascota</td><td>Id, FundacionId, Nombre, Especie, Raza, EdadMeses, Tamano, Ciudad, Estado</td><td>1→* SolicitudAdopcion</td></tr>
+<tr><td>SolicitudAdopcion</td><td>Id, MascotaId, AdoptanteId, Estado, Mensaje, Fechas</td><td>N→1 Mascota, Usuario</td></tr>
+</table>
+
+<h2>8.2 Interfaces de servicio</h2>
+<table>
+<tr><th>Interface</th><th>Métodos</th></tr>
+<tr><td>IAuthService</td><td>RegisterAsync, LoginAsync, GetByIdAsync</td></tr>
+<tr><td>IMascotaService</td><td>CreateAsync, GetByFiltersAsync, GetByIdAsync, UpdateAsync, DeleteAsync</td></tr>
+<tr><td>ISolicitudService</td><td>CreateAsync, ChangeStatusAsync, GetByAdoptanteAsync, GetByFundacionAsync</td></tr>
+<tr><td>IReporteService</td><td>GetReporteAsync(fundacionId, desde, hasta)</td></tr>
+</table>
+
+<h2>8.3 DTOs principales</h2>
+<table>
+<tr><th>DTO</th><th>Campos</th></tr>
+<tr><td>RegisterDto</td><td>Nombre, Email, Password, Ciudad, Tipo, NombreOrganizacion</td></tr>
+<tr><td>MascotaFilterDto</td><td>Especie, EdadMin, EdadMax, Tamano, Ciudad, Estado, Page, PageSize</td></tr>
+<tr><td>CreateSolicitudDto</td><td>MascotaId, Mensaje</td></tr>
+<tr><td>ReporteFundacionDto</td><td>TotalDisponibles, TotalEnProceso, TotalAdoptadas, AdopcionesCompletadasPeriodo</td></tr>
+<tr><td>AuthResponseDto</td><td>Token, Usuario</td></tr>
+</table>
+
+<h1>9. Diagrama de Secuencia</h1>
+
+<h2>9.1 Solicitud de adopción (Adoptante)</h2>
+<ol>
+<li>Adoptante completa formulario de solicitud</li>
+<li>POST /api/solicitudes { mascotaId, mensaje } + JWT</li>
+<li>API valida token y rol Adoptante</li>
+<li>SolicitudService verifica mascota Disponible</li>
+<li>Verifica no exista solicitud activa del mismo adoptante</li>
+<li>INSERT Solicitud (Pendiente) + UPDATE Mascota (EnProceso)</li>
+<li>Retorna 201 Created</li>
+</ol>
+
+<h2>9.2 Fundación aprueba solicitud</h2>
+<ol>
+<li>PUT /api/solicitudes/{id}/estado { estado: Aprobada }</li>
+<li>Valida transición EnRevision → Aprobada</li>
+<li>Valida propiedad de la mascota</li>
+<li>UPDATE solicitud → Aprobada</li>
+<li>Rechaza automáticamente otras solicitudes activas</li>
+<li>UPDATE mascota → Adoptada (transacción atómica)</li>
+<li>Retorna 200 OK</li>
+</ol>
+
+<h2>9.3 Búsqueda pública de mascotas</h2>
+<ol>
+<li>GET /api/mascotas?especie=Perro&amp;ciudad=Bogotá&amp;page=1&amp;pageSize=10</li>
+<li>MascotaService ejecuta consulta con filtros dinámicos</li>
+<li>Repository: SELECT con OFFSET/FETCH</li>
+<li>Retorna 200 { items[], totalCount, page, pageSize }</li>
+</ol>
+
+<h1>10. Diagrama de Componentes</h1>
+
+<h2>10.1 Capas de arquitectura</h2>
+<table>
+<tr><th>Capa</th><th>Componentes</th><th>Responsabilidad</th></tr>
+<tr><td>Presentación</td><td>AdoptaAPI.Web (MVC), JavaScript (fetch), Figma Mockups</td><td>UI, consumo API REST</td></tr>
+<tr><td>API</td><td>Controllers, Swagger UI, JWT Middleware</td><td>Endpoints REST, autenticación</td></tr>
+<tr><td>Business Logic</td><td>AuthService, MascotaService, SolicitudService, ReporteService, Validators, AutoMapper</td><td>Reglas de negocio, validaciones</td></tr>
+<tr><td>Data Access</td><td>Repositories, AdoptaDbContext (EF Core 8)</td><td>Persistencia, migraciones</td></tr>
+<tr><td>Storage</td><td>Azure SQL Database</td><td>Almacenamiento relacional</td></tr>
+<tr><td>Cloud</td><td>Azure App Service, Azure Key Vault</td><td>Hosting y secretos</td></tr>
+</table>
+
+<h2>10.2 Componentes detallados</h2>
+<table>
+<tr><th>Componente</th><th>Proyecto</th><th>Responsabilidad</th></tr>
+<tr><td>AdoptaAPI.Web</td><td>Presentation</td><td>Vistas Razor, assets, cliente JS</td></tr>
+<tr><td>AdoptaAPI.Api</td><td>Presentation</td><td>Controllers REST, JWT, Swagger</td></tr>
+<tr><td>AuthService</td><td>Business</td><td>Registro, login, JWT</td></tr>
+<tr><td>MascotaService</td><td>Business</td><td>CRUD, filtros, propiedad</td></tr>
+<tr><td>SolicitudService</td><td>Business</td><td>Máquina estados, rechazo concurrente</td></tr>
+<tr><td>ReporteService</td><td>Business</td><td>Agregaciones, métricas</td></tr>
+<tr><td>Repositories</td><td>Data</td><td>Abstracción EF Core</td></tr>
+<tr><td>AdoptaDbContext</td><td>Data</td><td>ORM, migraciones</td></tr>
+</table>
+
+<h2>10.3 Interfaces entre capas</h2>
+<table>
+<tr><th>Endpoint HTTP</th><th>Servicio interno</th></tr>
+<tr><td>POST /api/auth/register</td><td>IAuthService.RegisterAsync</td></tr>
+<tr><td>POST /api/auth/login</td><td>IAuthService.LoginAsync</td></tr>
+<tr><td>GET /api/mascotas</td><td>IMascotaService.GetByFiltersAsync</td></tr>
+<tr><td>POST /api/mascotas</td><td>IMascotaService.CreateAsync</td></tr>
+<tr><td>POST /api/solicitudes</td><td>ISolicitudService.CreateAsync</td></tr>
+<tr><td>PUT /api/solicitudes/{id}/estado</td><td>ISolicitudService.ChangeStatusAsync</td></tr>
+<tr><td>GET /api/reportes/fundacion</td><td>IReporteService.GetReporteAsync</td></tr>
+</table>
+
+<h2>10.4 Flujo de comunicación</h2>
+<pre>Navegador → AdoptaAPI.Web (MVC + JS)
+  → HTTP REST + JWT → AdoptaAPI.Api (Controllers)
+    → Services (Auth, Mascota, Solicitud, Reporte)
+      → Validators + AutoMapper
+      → Repositories → AdoptaDbContext (EF Core 8)
+        → Azure SQL Database
+
+Swagger UI → Controllers (pruebas directas)
+Azure Key Vault → Connection strings + JWT secret</pre>
+
+<h2>10.5 Despliegue Azure</h2>
+<table>
+<tr><th>Recurso</th><th>Función</th></tr>
+<tr><td>App Service (Web)</td><td>Hosting AdoptaAPI.Web</td></tr>
+<tr><td>App Service (API)</td><td>Hosting AdoptaAPI.Api + Swagger</td></tr>
+<tr><td>Azure SQL Database</td><td>Base de datos AdoptaDB</td></tr>
+<tr><td>Azure Key Vault</td><td>Secretos y connection strings</td></tr>
+</table>
+
+<h1>11. Matriz de Trazabilidad</h1>
+
+<table>
+<tr><th>Objetivo</th><th>Épica</th><th>Historia</th><th>Tareas</th><th>Entregable</th></tr>
+<tr><td>OE-01</td><td>E-05</td><td>HU-12</td><td>T-04, T-25</td><td>Swagger UI + OpenAPI</td></tr>
+<tr><td>OE-02</td><td>E-02</td><td>HU-05</td><td>T-10</td><td>GET /api/mascotas filtros</td></tr>
+<tr><td>OE-03</td><td>E-03</td><td>HU-08, HU-09</td><td>T-16–T-18</td><td>Máquina de estados</td></tr>
+<tr><td>OE-04</td><td>E-04</td><td>HU-11</td><td>T-19</td><td>Reportes fundación</td></tr>
+<tr><td>OE-05</td><td>E-05, E-06</td><td>HU-12, HU-13</td><td>T-25, T-28</td><td>Swagger + Figma</td></tr>
+<tr><td>—</td><td>E-01</td><td>HU-01–03</td><td>T-07, T-08, T-13</td><td>Auth JWT</td></tr>
+<tr><td>—</td><td>E-02</td><td>HU-04–07</td><td>T-09–T-12</td><td>CRUD Mascotas</td></tr>
+</table>
+
+<h2>Apéndice — Endpoints REST</h2>
+<table>
+<tr><th>Método</th><th>Ruta</th><th>Auth</th><th>Rol</th><th>Historia</th></tr>
+<tr><td>POST</td><td>/api/auth/register</td><td>No</td><td>—</td><td>HU-01, HU-02</td></tr>
+<tr><td>POST</td><td>/api/auth/login</td><td>No</td><td>—</td><td>HU-03</td></tr>
+<tr><td>GET</td><td>/api/mascotas</td><td>No</td><td>—</td><td>HU-05</td></tr>
+<tr><td>GET</td><td>/api/mascotas/{id}</td><td>No</td><td>—</td><td>HU-07</td></tr>
+<tr><td>POST</td><td>/api/mascotas</td><td>Sí</td><td>Fundación</td><td>HU-04</td></tr>
+<tr><td>PUT</td><td>/api/mascotas/{id}</td><td>Sí</td><td>Fundación</td><td>HU-06</td></tr>
+<tr><td>DELETE</td><td>/api/mascotas/{id}</td><td>Sí</td><td>Fundación</td><td>HU-06</td></tr>
+<tr><td>POST</td><td>/api/solicitudes</td><td>Sí</td><td>Adoptante</td><td>HU-08</td></tr>
+<tr><td>GET</td><td>/api/solicitudes/mis-solicitudes</td><td>Sí</td><td>Adoptante</td><td>HU-10</td></tr>
+<tr><td>GET</td><td>/api/solicitudes/fundacion</td><td>Sí</td><td>Fundación</td><td>HU-09</td></tr>
+<tr><td>PUT</td><td>/api/solicitudes/{id}/estado</td><td>Sí</td><td>Fundación</td><td>HU-09</td></tr>
+<tr><td>GET</td><td>/api/reportes/fundacion</td><td>Sí</td><td>Fundación</td><td>HU-11</td></tr>
+</table>
+
+<p style="margin-top:40px; text-align:center; color:#888; font-size:9pt;">
+Documento generado para el equipo AdoptaAPI — Versión 1.0 — Agosto 2026
+</p>
+
+</body>
+</html>

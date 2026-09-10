@@ -1,0 +1,477 @@
+================================================================================
+                    AdoptaAPI — DOCUMENTO COMPLETO PARA COPIAR
+                    Sistema de Gestión de Adopción de Mascotas
+================================================================================
+
+CÓMO PEGAR EN GOOGLE DOCS:
+1. Abre este archivo, selecciona todo (Ctrl+A) y copia (Ctrl+C)
+2. Pega en Google Docs (Ctrl+V)
+3. Para diagramas ASCII: selecciónalos → Fuente → Courier New → tamaño 9
+4. Para diagramas visuales: ve a https://mermaid.live → pega el código Mermaid
+   → Export PNG → Insertar imagen en Docs
+
+Equipo: Samanta Rojas, Killiam García, Jonnathan Rey, Santiago Cuervo
+Stack: ASP.NET Core MVC 8, C#, JavaScript, SQL Server, Azure
+Metodología: Agile / Scrum | Versión: 1.0 — Agosto 2026
+
+================================================================================
+ÍNDICE
+================================================================================
+1. Resumen ejecutivo
+2. Contexto y objetivos
+3. Alcance
+4. Épicas y módulos
+5. Historias de usuario
+6. Tareas y planificación
+7. Modelo de datos
+8. Diagrama entidad-relación (ASCII + Mermaid)
+9. Máquina de estados
+10. Diagrama de casos de uso
+11. Diagrama de clases
+12. Diagrama de secuencia
+13. Diagrama de componentes
+14. Matriz de trazabilidad
+15. Apéndice — Endpoints REST
+
+================================================================================
+1. RESUMEN EJECUTIVO
+================================================================================
+
+AdoptaAPI es una plataforma tecnológica orientada a centralizar y digitalizar el
+proceso de adopción de mascotas en Colombia. Conecta fundaciones de rescate animal
+con adoptantes potenciales mediante una API REST documentada y una interfaz web MVC,
+reemplazando la gestión fragmentada actual en redes sociales.
+
+Aspecto          | Descripción
+-----------------|-------------------------------------------------------------
+Problema         | Información dispersa, falta de trazabilidad, procesos informales
+Solución         | API centralizada con filtros, estados trazables y reportes
+Usuarios         | Fundaciones, adoptantes y visitantes
+Entregables      | API REST, Swagger, modelo relacional, UML, Figma, Azure
+Duración         | 6 semanas (3 sprints + setup)
+
+================================================================================
+2. CONTEXTO Y OBJETIVOS
+================================================================================
+
+2.1 OBJETIVO GENERAL
+--------------------
+Desarrollar una API REST que centralice y digitalice el proceso de publicación,
+búsqueda y seguimiento de adopciones de mascotas, conectando de forma ágil y
+trazable a fundaciones de rescate animal con potenciales adoptantes.
+
+2.2 OBJETIVOS ESPECÍFICOS
+-------------------------
+OE-01 | API REST documentada con Swagger → OpenAPI 3.0 en /swagger
+OE-02 | Filtrado por especie, edad, tamaño y ciudad → GET /api/mascotas
+OE-03 | Flujo de solicitud con 5 estados trazables
+OE-04 | Reportes para fundaciones → disponibles vs. adoptadas
+OE-05 | Swagger UI + mockups Figma navegables
+
+2.3 DESCRIPCIÓN DEL PROBLEMA
+----------------------------
+• 58% de hogares colombianos tienen mascotas; red de rescate informal y atomizada
+• Información dispersa en Instagram, Facebook, hashtags (#AdoptaEnBogota)
+• Falta de confianza: adoptantes verifican manualmente rescatistas
+• Proceso intrazable por mensajes privados; refugios saturados
+• Reportes artesanales (ej. "Plan Padrino") no escalan
+
+================================================================================
+3. ALCANCE
+================================================================================
+
+INCLUYE:                          NO INCLUYE:
+• API REST completa               • Pasarela de pagos
+• Auth JWT (fundación/adoptante)  • Notificaciones push
+• Filtros de búsqueda             • App móvil nativa
+• Swagger UI                      • Verificación legal/judicial
+• SQL Server + EF Core            • Verificación auto. fundaciones
+• Interfaz MVC + mockups Figma
+• Despliegue Azure
+
+================================================================================
+4. ÉPICAS Y MÓDULOS
+================================================================================
+
+Épica | Módulo                  | Descripción                        | Sprint
+------|-------------------------|------------------------------------|--------
+E-01  | Autenticación           | Registro, login JWT, roles         | Sprint 1
+E-02  | Gestión de Mascotas     | CRUD + filtros búsqueda            | Sprint 1
+E-03  | Solicitudes de Adopción | Máquina de estados trazable        | Sprint 2
+E-04  | Reportes e Impacto      | Dashboard métricas fundaciones     | Sprint 2
+E-05  | Documentación API       | Swagger UI + OpenAPI 3.0           | Sprint 3
+E-06  | Interfaz Web y UX       | MVC + mockups Figma                | Sprint 1-3
+
+DESGLOSE:
+E-01 → Registro fundaciones/adoptantes, Login JWT, Autorización por rol
+E-02 → Publicar, buscar, ver detalle, actualizar/eliminar mascota
+E-03 → Crear solicitud, consultar, cambiar estado, rechazo concurrente
+E-04 → Totales por estado, adopciones por periodo, impacto
+E-05 → Swashbuckle, anotaciones XML, pruebas Swagger
+E-06 → Vistas MVC, panel fundación, mockups Figma
+
+================================================================================
+5. HISTORIAS DE USUARIO
+================================================================================
+
+HU-01 — Registro de fundación
+Como fundación, quiero registrarme, para publicar mascotas.
+CA: nombre, email, contraseña, ciudad, organización | email único | HTTP 201
+
+HU-02 — Registro de adoptante
+Como adoptante, quiero registrarme, para enviar solicitudes.
+CA: nombre, email, contraseña, ciudad | tipo Adoptante | HTTP 201
+
+HU-03 — Inicio de sesión
+Como usuario, quiero iniciar sesión, para acceder según mi rol.
+CA: JWT con userId, email, rol | HTTP 401 si inválido
+
+HU-04 — Publicar mascota
+Como fundación, quiero publicar ficha, para que adoptantes la encuentren.
+CA: nombre, especie, edad, tamaño, ciudad, descripción | estado Disponible
+
+HU-05 — Buscar mascotas con filtros
+Como visitante/adoptante, quiero filtrar, para encontrar la ideal.
+CA: filtros combinables, paginación, endpoint público
+
+HU-06 — Actualizar/eliminar mascota
+Como fundación, quiero editar/eliminar mis fichas.
+CA: solo propietario | no eliminar con solicitudes activas
+
+HU-07 — Ver detalle de mascota
+Como adoptante, quiero ver info completa, para decidir adopción.
+CA: incluye datos fundación | HTTP 404 si no existe
+
+HU-08 — Enviar solicitud de adopción
+Como adoptante, quiero solicitar adopción, para iniciar proceso.
+CA: estado Pendiente | mascota Disponible → EnProceso | HTTP 201
+
+HU-09 — Gestionar solicitudes
+Como fundación, quiero cambiar estados, para gestionar adopciones.
+CA: Pendiente→EnRevision→Aprobada|Rechazada→Completada
+    Al aprobar: mascota Adoptada, rechazar otras solicitudes
+
+HU-10 — Consultar mis solicitudes
+Como adoptante, quiero ver mis solicitudes, para seguimiento.
+CA: solo del adoptante autenticado | orden por fecha
+
+HU-11 — Reporte de impacto
+Como fundación, quiero ver reporte, para medir impacto.
+CA: disponibles, en proceso, adoptadas | filtro por fechas
+
+HU-12 — Swagger UI | HU-13 — Mockups Figma
+CA: /swagger con JWT | flujo completo responsive en Figma
+
+================================================================================
+6. TAREAS Y PLANIFICACIÓN
+================================================================================
+
+SPRINT 0 (1 sem): T-01 a T-06 — Setup .NET 8, EF Core, Swagger, Git, Figma
+SPRINT 1 (2 sem): T-07 a T-15 — Auth JWT, CRUD mascotas, MVC, diagramas UML
+SPRINT 2 (2 sem): T-16 a T-24 — Solicitudes, reportes, panel, secuencia/componentes
+SPRINT 3 (1 sem): T-25 a T-30 — Swagger, pruebas, Figma, Azure, demo
+
+Tareas clave:
+T-07  AuthService + AuthController (JWT)           8h  HU-01–03
+T-09  MascotaService + Controller (CRUD)           8h  HU-04, HU-06
+T-10  Filtros GET /mascotas                        5h  HU-05
+T-16  SolicitudService + máquina estados          10h  HU-08, HU-09
+T-19  ReporteService + Controller                  5h  HU-11
+T-21  Panel fundación                              10h  HU-09, HU-11
+T-29  Despliegue Azure                             6h  —
+
+================================================================================
+7. MODELO DE DATOS
+================================================================================
+
+ENTIDAD            | CAMPOS CLAVE                          | RELACIONES
+-------------------|---------------------------------------|------------------
+USUARIO            | Id, Email(UK), PasswordHash, Tipo     | 1:0..1 FUNDACION
+FUNDACION          | Id, UsuarioId(FK), NombreOrganizacion | 1:N MASCOTA
+MASCOTA            | Id, FundacionId, Especie, Estado      | 1:N SOLICITUD
+SOLICITUD_ADOPCION | Id, MascotaId, AdoptanteId, Estado     | N:1 MASCOTA, USUARIO
+
+ENUMERACIONES:
+TipoUsuario     { Fundacion, Adoptante }
+TamanoMascota   { Pequeno, Mediano, Grande }
+EstadoMascota   { Disponible, EnProceso, Adoptada }
+EstadoSolicitud { Pendiente, EnRevision, Aprobada, Rechazada, Completada }
+
+REGLAS DE NEGOCIO:
+RN-01: Usuario Fundacion → exactamente 1 FUNDACION
+RN-02: Solo una solicitud Aprobada/Completada por mascota
+RN-03: Al aprobar → demás activas → Rechazada
+RN-04: Mascota Adoptada no acepta nuevas solicitudes
+RN-05: Email único en el sistema
+RN-06: Índice MASCOTA(Especie, Ciudad, Estado)
+
+================================================================================
+8. DIAGRAMA ENTIDAD-RELACIÓN (ASCII)
+================================================================================
+
+    ┌─────────────┐
+    │   USUARIO   │
+    │ Id, Email   │
+    │ TipoUsuario │
+    └──────┬──────┘
+           │ 1:0..1
+    ┌──────▼──────┐         1:N          ┌─────────────┐
+    │  FUNDACION  │─────────────────────►│   MASCOTA   │
+    │ NombreOrg   │      publica         │ Especie     │
+    └─────────────┘                      │ Estado      │
+           ▲                             └──────┬──────┘
+           │                                    │ 1:N
+    ┌──────┴──────┐                             │
+    │   USUARIO   │ 1:N solicita         ┌──────▼──────────┐
+    │ (Adoptante) │─────────────────────►│ SOLICITUD       │
+    └─────────────┘                      │ Estado, Mensaje │
+                                         └─────────────────┘
+
+CÓDIGO MERMAID (pegar en https://mermaid.live → Export PNG):
+---
+erDiagram
+    USUARIO ||--o| FUNDACION : "es"
+    FUNDACION ||--o{ MASCOTA : publica
+    USUARIO ||--o{ SOLICITUD_ADOPCION : solicita
+    MASCOTA ||--o{ SOLICITUD_ADOPCION : recibe
+    USUARIO { int Id string Email string TipoUsuario }
+    FUNDACION { int Id string NombreOrganizacion }
+    MASCOTA { int Id string Especie string Estado }
+    SOLICITUD_ADOPCION { int Id string Estado }
+---
+
+================================================================================
+9. MÁQUINA DE ESTADOS — SOLICITUD DE ADOPCIÓN
+================================================================================
+
+    (*) ──► [Pendiente] ──► [EnRevision] ──► [Aprobada] ──► [Completada] ──► (*)
+                │                │
+                │                └──► [Rechazada] ──► (*)
+                └───────────────────► [Rechazada] ──► (*)
+
+CÓDIGO MERMAID:
+---
+stateDiagram-v2
+    [*] --> Pendiente
+    Pendiente --> EnRevision
+    Pendiente --> Rechazada
+    EnRevision --> Aprobada
+    EnRevision --> Rechazada
+    Aprobada --> Completada
+    Rechazada --> [*]
+    Completada --> [*]
+---
+
+================================================================================
+10. DIAGRAMA DE CASOS DE USO
+================================================================================
+
+         Adoptante                    SISTEMA AdoptaAPI                 Fundación
+            │                    ┌─────────────────────────┐                │
+            ├── Registrarse ────►│                         │◄── Registrarse ──┤
+            ├── Login ──────────►│  Buscar mascotas        │                │
+            ├── Buscar ──────────►│  Ver detalle            │◄── Publicar ─────┤
+            ├── Ver detalle ─────►│  Enviar solicitud       │                │
+            ├── Enviar solicitud ►│  Gestionar solicitudes  │◄── Gestionar ────┤
+            │                    │  Ver reportes           │◄── Ver reportes ──┤
+            │                    └─────────────────────────┘                │
+         Visitante ──► Buscar, Ver detalle (público)
+         Desarrollador ──► Probar en Swagger UI
+
+CASOS DE USO PRINCIPALES:
+UC-10 Enviar solicitud | Adoptante | Mascota Disponible → Solicitud Pendiente, Mascota EnProceso
+UC-13 Cambiar estado   | Fundación | Validar transición → Actualizar solicitud y mascota
+UC-06 Buscar mascotas  | Visitante | Filtros → Resultados paginados
+
+CÓDIGO MERMAID:
+---
+graph TB
+    ADO((Adoptante)) --> UC1[Registrarse]
+    ADO --> UC2[Buscar mascotas]
+    ADO --> UC3[Enviar solicitud]
+    FUN((Fundación)) --> UC4[Publicar mascota]
+    FUN --> UC5[Gestionar solicitudes]
+    FUN --> UC6[Ver reportes]
+    VIS((Visitante)) --> UC2
+---
+
+================================================================================
+11. DIAGRAMA DE CLASES
+================================================================================
+
+DOMINIO:
+┌─────────────────┐     1:0..1    ┌─────────────────┐
+│     Usuario     │──────────────►│    Fundacion    │
+│ +Id, Email      │               │ +NombreOrg      │
+│ +TipoUsuario    │               │ +PublicarMascota│
+└────────┬────────┘               └────────┬────────┘
+         │ 1:N solicita                    │ 1:N
+         │                          ┌──────▼────────┐
+         │                          │    Mascota    │
+         │                          │ +Especie      │
+         │                          │ +Estado       │
+         │                          └──────┬────────┘
+         │                                 │ 1:N
+         └────────────────────────────────►│ SolicitudAdopcion │
+                                           │ +Estado           │
+                                           └───────────────────┘
+
+SERVICIOS:
+«interface» IAuthService      → AuthService
+«interface» IMascotaService  → MascotaService
+«interface» ISolicitudService → SolicitudService
+«interface» IReporteService  → ReporteService
+
+CÓDIGO MERMAID:
+---
+classDiagram
+    class Usuario { +Id +Email +TipoUsuario }
+    class Fundacion { +NombreOrganizacion +PublicarMascota() }
+    class Mascota { +Especie +EstadoMascota +ActualizarEstado() }
+    class SolicitudAdopcion { +EstadoSolicitud +CambiarEstado() }
+    Usuario "1" --> "0..1" Fundacion
+    Fundacion "1" --> "*" Mascota
+    Mascota "1" --> "*" SolicitudAdopcion
+    Usuario "1" --> "*" SolicitudAdopcion
+---
+
+================================================================================
+12. DIAGRAMA DE SECUENCIA
+================================================================================
+
+FLUJO A — Adoptante envía solicitud:
+Adoptante → MVC+JS → API Controller → SolicitudService → Repository → SQL Server
+  1. Completa formulario
+  2. POST /api/solicitudes { mascotaId, mensaje } + JWT
+  3. Validar token y rol Adoptante
+  4. Verificar mascota Disponible
+  5. Verificar no hay solicitud activa duplicada
+  6. INSERT Solicitud (Pendiente) + UPDATE Mascota (EnProceso)
+  7. Retorna 201 Created
+
+FLUJO B — Fundación aprueba:
+  1. PUT /api/solicitudes/{id}/estado { Aprobada }
+  2. Validar transición EnRevision → Aprobada
+  3. UPDATE solicitud → Aprobada
+  4. Rechazar otras solicitudes activas de la mascota
+  5. UPDATE mascota → Adoptada (transacción atómica)
+  6. Retorna 200 OK
+
+CÓDIGO MERMAID:
+---
+sequenceDiagram
+    actor Adoptante
+    participant Web as MVC+JS
+    participant API as API Controller
+    participant Svc as SolicitudService
+    participant DB as SQL Server
+    Adoptante->>Web: Enviar solicitud
+    Web->>API: POST /api/solicitudes
+    API->>Svc: CreateAsync()
+    Svc->>DB: INSERT + UPDATE mascota
+    DB-->>Svc: OK
+    Svc-->>API: SolicitudDto
+    API-->>Web: 201 Created
+---
+
+================================================================================
+13. DIAGRAMA DE COMPONENTES
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                        CAPA DE PRESENTACIÓN                                 │
+│  [AdoptaAPI.Web MVC]  [JavaScript/fetch]  [Swagger UI]  [Figma Mockups]   │
+└───────────────────────────────────┬─────────────────────────────────────────┘
+                                    │ HTTP REST + JWT
+┌───────────────────────────────────▼─────────────────────────────────────────┐
+│                              CAPA API                                       │
+│  [AuthController] [MascotasController] [SolicitudesController] [Reportes]   │
+│  [JWT Middleware]                                                           │
+└───────────────────────────────────┬─────────────────────────────────────────┘
+                                    │
+┌───────────────────────────────────▼─────────────────────────────────────────┐
+│                        CAPA BUSINESS LOGIC                                │
+│  [AuthService] [MascotaService] [SolicitudService] [ReporteService]         │
+│  [FluentValidation] [AutoMapper]                                            │
+└───────────────────────────────────┬─────────────────────────────────────────┘
+                                    │
+┌───────────────────────────────────▼─────────────────────────────────────────┐
+│                         CAPA DATA ACCESS                                  │
+│  [UsuarioRepository] [MascotaRepository] [SolicitudRepository]              │
+│  [AdoptaDbContext — EF Core 8]                                              │
+└───────────────────────────────────┬─────────────────────────────────────────┘
+                                    │
+┌───────────────────────────────────▼─────────────────────────────────────────┐
+│                    AZURE — SQL Database + Key Vault                         │
+│                    App Service (Web + API)                                  │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+CÓDIGO MERMAID:
+---
+graph TB
+    subgraph Presentación
+        MVC[AdoptaAPI.Web MVC]
+        JS[JavaScript]
+        SWG[Swagger UI]
+    end
+    subgraph API
+        CTRL[Controllers REST]
+        JWT[JWT Middleware]
+    end
+    subgraph Business
+        SVC[Services]
+        VAL[Validators]
+    end
+    subgraph Data
+        REPO[Repositories]
+        EF[EF Core DbContext]
+    end
+    SQL[(Azure SQL)]
+    MVC --> CTRL
+    JS --> CTRL
+    SWG --> CTRL
+    CTRL --> JWT
+    CTRL --> SVC
+    SVC --> VAL
+    SVC --> REPO
+    REPO --> EF
+    EF --> SQL
+---
+
+================================================================================
+14. MATRIZ DE TRAZABILIDAD
+================================================================================
+
+Objetivo | Épica | Historia    | Tareas      | Entregable
+---------|-------|-------------|-------------|---------------------------
+OE-01    | E-05  | HU-12       | T-04,T-25   | Swagger UI + OpenAPI
+OE-02    | E-02  | HU-05       | T-10        | GET /mascotas filtros
+OE-03    | E-03  | HU-08,HU-09 | T-16–T-18   | Máquina de estados
+OE-04    | E-04  | HU-11       | T-19        | Reportes fundación
+OE-05    | E-05  | HU-12,HU-13 | T-25,T-28   | Swagger + Figma
+—        | E-01  | HU-01–03    | T-07,T-08   | Auth JWT
+—        | E-02  | HU-04–07    | T-09–T-12   | CRUD Mascotas
+
+================================================================================
+15. APÉNDICE — ENDPOINTS REST
+================================================================================
+
+Método | Ruta                              | Auth | Rol        | Historia
+-------|-----------------------------------|------|------------|----------
+POST   | /api/auth/register                | No   | —          | HU-01,02
+POST   | /api/auth/login                   | No   | —          | HU-03
+GET    | /api/mascotas                     | No   | —          | HU-05
+GET    | /api/mascotas/{id}                | No   | —          | HU-07
+POST   | /api/mascotas                     | Sí   | Fundación  | HU-04
+PUT    | /api/mascotas/{id}                | Sí   | Fundación  | HU-06
+DELETE | /api/mascotas/{id}                | Sí   | Fundación  | HU-06
+POST   | /api/solicitudes                  | Sí   | Adoptante  | HU-08
+GET    | /api/solicitudes/mis-solicitudes  | Sí   | Adoptante  | HU-10
+GET    | /api/solicitudes/fundacion        | Sí   | Fundación  | HU-09
+PUT    | /api/solicitudes/{id}/estado      | Sí   | Fundación  | HU-09
+GET    | /api/reportes/fundacion            | Sí   | Fundación  | HU-11
+
+================================================================================
+FIN DEL DOCUMENTO — AdoptaAPI v1.0 — Agosto 2026
+Samanta Rojas · Killiam García · Jonnathan Rey · Santiago Cuervo
+================================================================================

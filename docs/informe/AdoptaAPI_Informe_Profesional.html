@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AdoptaAPI — Informe de Proyecto</title>
+<style>
+:root{--primary:#1B3A5C;--accent:#2E86AB;--light:#E8F4F8;--text:#2C3E50;--muted:#6C757D}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Calibri,Arial,sans-serif;color:var(--text);line-height:1.6;background:#fff}
+@page{size:A4;margin:20mm 18mm}
+@media print{
+  .no-print{display:none!important}
+  .page-break{page-break-before:always}
+  body{font-size:10pt}
+  a{color:inherit;text-decoration:none}
+}
+.cover{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;background:linear-gradient(135deg,var(--primary) 0%,#0F2744 100%);color:#fff;text-align:center;padding:60px 40px}
+.cover .badge{background:var(--accent);padding:6px 20px;border-radius:20px;font-size:11pt;margin-bottom:30px;letter-spacing:1px}
+.cover h1{font-size:42pt;font-weight:300;margin-bottom:8px}
+.cover h1 strong{font-weight:700;color:#7FDBFF}
+.cover .subtitle{font-size:16pt;opacity:.9;margin-bottom:40px;max-width:600px}
+.cover .meta{display:grid;grid-template-columns:1fr 1fr;gap:12px 40px;text-align:left;background:rgba(255,255,255,.08);padding:24px 32px;border-radius:8px;font-size:11pt}
+.cover .meta dt{color:#7FDBFF;font-weight:600;margin-bottom:2px}
+.cover .meta dd{margin-bottom:12px}
+.cover .team{margin-top:40px;font-size:11pt;opacity:.85}
+.container{max-width:900px;margin:0 auto;padding:40px 50px}
+h2.section{font-size:20pt;color:var(--primary);border-bottom:3px solid var(--accent);padding-bottom:8px;margin:36px 0 20px;page-break-after:avoid}
+h3{font-size:13pt;color:var(--accent);margin:20px 0 10px;page-break-after:avoid}
+h4{font-size:11pt;color:var(--primary);margin:14px 0 8px}
+p{margin-bottom:10px;text-align:justify}
+ul,ol{margin:8px 0 12px 24px}
+li{margin:4px 0}
+table{width:100%;border-collapse:collapse;margin:14px 0 20px;font-size:9.5pt;page-break-inside:avoid}
+th{background:var(--primary);color:#fff;padding:8px 10px;text-align:left;font-weight:600}
+td{border:1px solid #D0D7DE;padding:7px 10px;vertical-align:top}
+tr:nth-child(even) td{background:var(--light)}
+.story{border-left:4px solid var(--accent);background:#F8FBFD;padding:12px 16px;margin:12px 0;border-radius:0 6px 6px 0;page-break-inside:avoid}
+.story .hu-title{font-weight:700;color:var(--primary);margin-bottom:6px}
+.story .hu-format{font-style:italic;color:var(--muted);margin-bottom:8px;font-size:10pt}
+.diagram{background:#FAFBFC;border:1px solid #E1E8ED;border-radius:8px;padding:16px;margin:16px 0;text-align:center;page-break-inside:avoid}
+.diagram svg{max-width:100%;height:auto}
+.diagram figcaption{font-size:9pt;color:var(--muted);margin-top:10px;font-style:italic}
+.toc{background:var(--light);padding:24px 32px;border-radius:8px;margin:20px 0}
+.toc h2{border:none;margin:0 0 16px;font-size:16pt}
+.toc ol{columns:2;column-gap:40px;margin-left:20px}
+.toc li{margin:6px 0;font-size:10.5pt}
+.toc a{color:var(--accent)}
+.tag{display:inline-block;background:var(--accent);color:#fff;padding:2px 8px;border-radius:4px;font-size:8pt;font-weight:600;margin-right:4px}
+.tag.high{background:#C0392B}.tag.med{background:#E67E22}.tag.low{background:#27AE60}
+.footer{text-align:center;color:var(--muted);font-size:9pt;padding:30px;border-top:1px solid #E1E8ED;margin-top:40px}
+.print-bar{position:fixed;top:0;left:0;right:0;background:var(--primary);color:#fff;padding:10px 20px;display:flex;justify-content:space-between;align-items:center;z-index:999;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.print-bar button{background:var(--accent);color:#fff;border:none;padding:8px 20px;border-radius:4px;cursor:pointer;font-size:11pt}
+.print-bar button:hover{background:#257A9E}
+body{padding-top:50px}
+@media print{body{padding-top:0}}
+pre.code{font-family:Consolas,monospace;font-size:8.5pt;background:#F4F4F4;border:1px solid #DDD;padding:12px;border-radius:4px;white-space:pre-wrap;margin:10px 0}
+.summary-box{background:linear-gradient(135deg,var(--light),#fff);border:1px solid #B8D4E3;padding:16px 20px;border-radius:8px;margin:16px 0}
+</style>
+</head>
+<body>
+
+<div class="print-bar no-print">
+  <span>AdoptaAPI — Vista previa del informe</span>
+  <button onclick="window.print()">Guardar como PDF (Ctrl+P)</button>
+</div>
+
+<!-- PORTADA -->
+<section class="cover page-break">
+  <div class="badge">PROYECTO ACADÉMICO · INGENIERÍA DE SOFTWARE</div>
+  <h1><strong>Adopta</strong>API</h1>
+  <p class="subtitle">Sistema de Gestión de Adopción de Mascotas<br>API REST · ASP.NET Core MVC 8 · Azure</p>
+  <dl class="meta">
+    <div><dt>Institución / Curso</dt><dd>Desarrollo Web — Proyecto Lógico Web → API</dd></div>
+    <div><dt>Metodología</dt><dd>Agile / Scrum</dd></div>
+    <div><dt>Stack tecnológico</dt><dd>ASP.NET Core MVC 8, C#, JavaScript, SQL Server, Azure</dd></div>
+    <div><dt>Arquitectura</dt><dd>MVC en capas (Presentation · Business · Data Access)</dd></div>
+    <div><dt>Versión documento</dt><dd>1.0 — Agosto 2026</dd></div>
+    <div><dt>Integrantes</dt><dd>4 personas</dd></div>
+  </dl>
+  <p class="team">Samanta Rojas · Killiam García · Jonnathan Rey · Santiago Cuervo</p>
+</section>
+
+<div class="container">
+
+<!-- ÍNDICE -->
+<nav class="toc page-break" id="toc">
+  <h2>Índice de contenidos</h2>
+  <ol>
+    <li><a href="#s1">Resumen ejecutivo</a></li>
+    <li><a href="#s2">Contexto y objetivos</a></li>
+    <li><a href="#s3">Alcance del proyecto</a></li>
+    <li><a href="#s4">Épicas y módulos</a></li>
+    <li><a href="#s5">Historias de usuario</a></li>
+    <li><a href="#s6">Tareas y planificación</a></li>
+    <li><a href="#s7">Modelo de datos</a></li>
+    <li><a href="#s8">Diagrama de casos de uso</a></li>
+    <li><a href="#s9">Diagrama de clases</a></li>
+    <li><a href="#s10">Diagrama de secuencia</a></li>
+    <li><a href="#s11">Diagrama de componentes</a></li>
+    <li><a href="#s12">Matriz de trazabilidad</a></li>
+    <li><a href="#s13">Apéndice — Endpoints REST</a></li>
+  </ol>
+</nav>
+
+<!-- SECCIÓN 1 -->
+<h2 class="section page-break" id="s1">1. Resumen ejecutivo</h2>
+<div class="summary-box">
+<p><strong>AdoptaAPI</strong> es una plataforma tecnológica orientada a centralizar y digitalizar el proceso de adopción de mascotas en Colombia. Conecta fundaciones de rescate animal con adoptantes potenciales mediante una <strong>API REST documentada</strong> y una interfaz web MVC, reemplazando la gestión fragmentada actual en redes sociales.</p>
+</div>
+<table>
+<tr><th>Aspecto</th><th>Descripción</th></tr>
+<tr><td>Problema</td><td>Información dispersa, falta de trazabilidad y procesos informales en adopciones</td></tr>
+<tr><td>Solución</td><td>API centralizada con filtros, flujo de solicitudes con estados y reportes de impacto</td></tr>
+<tr><td>Usuarios</td><td>Fundaciones de rescate, adoptantes y visitantes</td></tr>
+<tr><td>Entregables</td><td>API REST, Swagger UI, modelo relacional, diagramas UML, mockups Figma, despliegue Azure</td></tr>
+<tr><td>Duración estimada</td><td>6 semanas (3 sprints + setup)</td></tr>
+</table>
+
+<!-- SECCIÓN 2 -->
+<h2 class="section page-break" id="s2">2. Contexto y objetivos</h2>
+<h3>2.1 Objetivo general</h3>
+<p>Desarrollar una <strong>API REST</strong> que centralice y digitalice el proceso de <strong>publicación, búsqueda y seguimiento de adopciones de mascotas</strong>, conectando de forma ágil y trazable a fundaciones de rescate animal con potenciales adoptantes.</p>
+
+<h3>2.2 Objetivos específicos</h3>
+<table>
+<tr><th>ID</th><th>Objetivo</th><th>Indicador de éxito</th></tr>
+<tr><td>OE-01</td><td>API REST documentada con Swagger</td><td>OpenAPI 3.0 publicado en /swagger</td></tr>
+<tr><td>OE-02</td><td>Filtrado por especie, edad, tamaño y ciudad</td><td>GET /api/mascotas con query params funcionales</td></tr>
+<tr><td>OE-03</td><td>Flujo de solicitud con estados trazables</td><td>5 estados con transiciones validadas</td></tr>
+<tr><td>OE-04</td><td>Reportes para fundaciones</td><td>Dashboard con métricas disponibles vs. adoptadas</td></tr>
+<tr><td>OE-05</td><td>Interfaz Swagger UI + mockups Figma</td><td>Prototipo navegable y API probada en vivo</td></tr>
+</table>
+
+<h3>2.3 Descripción del problema</h3>
+<p>En Colombia, cerca del <strong>58% de los hogares</strong> tiene al menos una mascota. La red de rescate es amplia pero <strong>informal y atomizada</strong>: fundaciones, colectivos y hogares de paso publican en Instagram, Facebook y grupos locales (#AdoptaEnBogota, #AdoptaNoCompres).</p>
+<ul>
+<li><strong>Dispersión informativa</strong> — decenas de perfiles sin catálogo unificado.</li>
+<li><strong>Falta de confianza</strong> — adoptantes verifican manualmente la legitimidad de rescatistas.</li>
+<li><strong>Proceso intrazable</strong> — solicitudes por mensajes privados; refugios saturados más tiempo del necesario.</li>
+<li><strong>Reportes artesanales</strong> — iniciativas como "Plan Padrino" confirman la necesidad de trazabilidad, pero no escalan.</li>
+</ul>
+
+<!-- SECCIÓN 3 -->
+<h2 class="section page-break" id="s3">3. Alcance del proyecto</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+<div>
+<h3>3.1 Dentro del alcance</h3>
+<ul>
+<li>API REST: usuarios, mascotas, solicitudes, reportes</li>
+<li>Autenticación JWT por rol (fundación / adoptante)</li>
+<li>Filtros: especie, edad, tamaño, ciudad, estado</li>
+<li>Swagger UI interactivo</li>
+<li>Modelo relacional SQL Server + EF Core</li>
+<li>Interfaz web MVC (cliente de la API)</li>
+<li>Mockups navegables en Figma</li>
+<li>Despliegue en Azure App Service</li>
+</ul>
+</div>
+<div>
+<h3>3.2 Fuera del alcance</h3>
+<ul>
+<li>Pasarela de pagos o donaciones</li>
+<li>Notificaciones push en tiempo real</li>
+<li>App móvil nativa</li>
+<li>Verificación legal/judicial de adopciones</li>
+<li>Verificación automatizada de fundaciones</li>
+</ul>
+</div>
+</div>
+
+<h2 class="section page-break" id="s4">4. Épicas y módulos</h2>
+<table>
+<tr><th>Épica</th><th>Módulo</th><th>Descripción</th><th>Prioridad</th><th>Sprint</th></tr>
+<tr><td>E-01</td><td>Autenticación y Usuarios</td><td>Registro, login JWT, roles fundación/adoptante</td><td><span class="tag high">Alta</span></td><td>Sprint 1</td></tr>
+<tr><td>E-02</td><td>Gestión de Mascotas</td><td>CRUD fichas + filtros de búsqueda avanzada</td><td><span class="tag high">Alta</span></td><td>Sprint 1</td></tr>
+<tr><td>E-03</td><td>Solicitudes de Adopción</td><td>Flujo con máquina de estados trazable</td><td><span class="tag high">Alta</span></td><td>Sprint 2</td></tr>
+<tr><td>E-04</td><td>Reportes e Impacto</td><td>Métricas y dashboard para fundaciones</td><td><span class="tag med">Media</span></td><td>Sprint 2</td></tr>
+<tr><td>E-05</td><td>Documentación API</td><td>Swagger UI + OpenAPI 3.0</td><td><span class="tag med">Media</span></td><td>Sprint 3</td></tr>
+<tr><td>E-06</td><td>Interfaz Web y UX</td><td>Vistas MVC + mockups Figma navegables</td><td><span class="tag med">Media</span></td><td>Sprint 1–3</td></tr>
+</table>
+
+<h2 class="section page-break" id="s5">5. Historias de usuario</h2>
+
+<div class="story"><div class="hu-title">HU-01 — Registro de fundación</div>
+<div class="hu-format">Como fundación, quiero registrarme, para publicar mascotas.</div>
+<ul><li>Campos: nombre, email, contraseña, ciudad, organización</li><li>Email único; contraseña hasheada; tipo Fundacion; HTTP 201</li></ul></div>
+
+<div class="story"><div class="hu-title">HU-02 — Registro de adoptante</div>
+<div class="hu-format">Como adoptante, quiero registrarme, para enviar solicitudes.</div>
+<ul><li>Campos: nombre, email, contraseña, ciudad; tipo Adoptante; HTTP 201</li></ul></div>
+
+<div class="story"><div class="hu-title">HU-03 — Inicio de sesión</div>
+<div class="hu-format">Como usuario, quiero iniciar sesión, para acceder según mi rol.</div>
+<ul><li>JWT con claims userId, email, rol; HTTP 401 si inválido</li></ul></div>
+
+<div class="story"><div class="hu-title">HU-04 — Publicar mascota</div>
+<div class="hu-format">Como fundación, quiero publicar una ficha, para que adoptantes la encuentren.</div>
+<ul><li>Campos obligatorios: nombre, especie, edad, tamaño, ciudad, descripción</li><li>Estado inicial Disponible; solo rol Fundacion</li></ul></div>
+
+<div class="story"><div class="hu-title">HU-05 — Buscar mascotas con filtros</div>
+<div class="hu-format">Como visitante/adoptante, quiero filtrar mascotas, para encontrar la ideal.</div>
+<ul><li>Filtros combinables: especie, edad, tamaño, ciudad, estado; paginación; endpoint público</li></ul></div>
+
+<div class="story"><div class="hu-title">HU-06 — Actualizar o eliminar mascota</div>
+<div class="hu-format">Como fundación, quiero editar/eliminar mis fichas, para mantener info actualizada.</div>
+<ul><li>Solo propietario; no eliminar con solicitudes EnRevision/Aprobada</li></ul></div>
+
+<div class="story"><div class="hu-title">HU-07 — Ver detalle de mascota</div>
+<div class="hu-format">Como adoptante, quiero ver info completa, para decidir adopción.</div>
+<ul><li>Incluye datos de fundación; HTTP 404 si no existe</li></ul></div>
+
+<div class="story"><div class="hu-title">HU-08 — Enviar solicitud de adopción</div>
+<div class="hu-format">Como adoptante, quiero solicitar adopción, para iniciar el proceso.</div>
+<ul><li>Estado Pendiente; mascota Disponible; mascota pasa a EnProceso; HTTP 201</li></ul></div>
+
+<div class="story"><div class="hu-title">HU-09 — Gestionar solicitudes</div>
+<div class="hu-format">Como fundación, quiero cambiar estados, para gestionar adopciones.</div>
+<ul><li>Pendiente→EnRevision→Aprobada|Rechazada→Completada</li><li>Al aprobar: mascota Adoptada; rechazar otras solicitudes activas</li></ul></div>
+
+<div class="story"><div class="hu-title">HU-10 — Consultar mis solicitudes</div>
+<div class="hu-format">Como adoptante, quiero ver mis solicitudes, para hacer seguimiento.</div>
+<ul><li>Solo del adoptante autenticado; orden por fecha descendente</li></ul></div>
+
+<div class="story"><div class="hu-title">HU-11 — Reporte de impacto</div>
+<div class="hu-format">Como fundación, quiero ver reporte de mis mascotas, para medir impacto.</div>
+<ul><li>Totales: disponibles, en proceso, adoptadas; filtro por fechas</li></ul></div>
+
+<div class="story"><div class="hu-title">HU-12 / HU-13 — Swagger UI y Mockups Figma</div>
+<ul><li>Swagger en /swagger con JWT; mockups responsive del flujo completo</li></ul></div>
+
+<h2 class="section page-break" id="s6">6. Tareas y planificación</h2>
+<table>
+<tr><th>Sprint</th><th>IDs</th><th>Entregables clave</th><th>Duración</th></tr>
+<tr><td>Sprint 0</td><td>T-01 a T-06</td><td>Solución .NET 8, EF Core, Swagger, Git, wireframes Figma</td><td>1 semana</td></tr>
+<tr><td>Sprint 1</td><td>T-07 a T-15</td><td>Auth JWT, CRUD mascotas, filtros, vistas MVC, diagramas UML (casos de uso, clases)</td><td>2 semanas</td></tr>
+<tr><td>Sprint 2</td><td>T-16 a T-24</td><td>Solicitudes + estados, reportes, panel fundación, diagramas (secuencia, componentes)</td><td>2 semanas</td></tr>
+<tr><td>Sprint 3</td><td>T-25 a T-30</td><td>Swagger completo, pruebas, mockups finales, despliegue Azure, demo</td><td>1 semana</td></tr>
+</table>
+
+<h3>6.1 Detalle de tareas por sprint</h3>
+<table>
+<tr><th>ID</th><th>Tarea</th><th>Historia</th><th>Est.</th></tr>
+<tr><td>T-07</td><td>AuthService + AuthController (JWT)</td><td>HU-01–03</td><td>8h</td></tr>
+<tr><td>T-09</td><td>MascotaService + Controller (CRUD)</td><td>HU-04, HU-06</td><td>8h</td></tr>
+<tr><td>T-10</td><td>Filtros y paginación GET /mascotas</td><td>HU-05</td><td>5h</td></tr>
+<tr><td>T-16</td><td>SolicitudService + máquina de estados</td><td>HU-08, HU-09</td><td>10h</td></tr>
+<tr><td>T-19</td><td>ReporteService + Controller</td><td>HU-11</td><td>5h</td></tr>
+<tr><td>T-21</td><td>Panel fundación (solicitudes + reporte)</td><td>HU-09, HU-11</td><td>10h</td></tr>
+<tr><td>T-29</td><td>Despliegue Azure App Service + SQL Azure</td><td>—</td><td>6h</td></tr>
+</table>
+
+<h2 class="section page-break" id="s7">7. Modelo de datos</h2>
+<table>
+<tr><th>Entidad</th><th>Campos clave</th><th>Relaciones</th></tr>
+<tr><td>USUARIO</td><td>Id, Nombre, Email (UK), PasswordHash, TipoUsuario, Ciudad, Activo</td><td>1:0..1 FUNDACION; 1:N SOLICITUD</td></tr>
+<tr><td>FUNDACION</td><td>Id, UsuarioId (FK), NombreOrganizacion, Verificada</td><td>1:N MASCOTA</td></tr>
+<tr><td>MASCOTA</td><td>Id, FundacionId, Nombre, Especie, EdadMeses, Tamano, Ciudad, Estado, FotoUrl</td><td>1:N SOLICITUD</td></tr>
+<tr><td>SOLICITUD_ADOPCION</td><td>Id, MascotaId, AdoptanteId, Estado, Mensaje, Fechas</td><td>N:1 MASCOTA, USUARIO</td></tr>
+</table>
+
+<h3>7.1 Enumeraciones y reglas de negocio</h3>
+<pre class="code">TipoUsuario     { Fundacion, Adoptante }
+TamanoMascota   { Pequeno, Mediano, Grande }
+EstadoMascota   { Disponible, EnProceso, Adoptada }
+EstadoSolicitud { Pendiente, EnRevision, Aprobada, Rechazada, Completada }
+
+RN-01: Usuario Fundacion → exactamente 1 registro FUNDACION
+RN-02: Solo una solicitud Aprobada/Completada por mascota
+RN-03: Al aprobar → demás solicitudes activas → Rechazada
+RN-04: Mascota Adoptada no acepta nuevas solicitudes</pre>
+
+<div class="diagram page-break" id="s7b">
+<figcaption>Figura 1 — Diagrama Entidad-Relación (Modelo de datos)</figcaption>
+<svg viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" width="700">
+<style>.e{fill:#E8F4F8;stroke:#1B3A5C;stroke-width:1.5}.t{font:11px Segoe UI,sans-serif;fill:#1B3A5C}.tn{font:12px Segoe UI,sans-serif;font-weight:bold;fill:#1B3A5C}.l{stroke:#2E86AB;stroke-width:1.5;fill:none}</style>
+<rect class="e" x="20" y="30" width="150" height="90" rx="4"/><text class="tn" x="95" y="55" text-anchor="middle">USUARIO</text><text class="t" x="30" y="72">Id, Nombre, Email</text><text class="t" x="30" y="87">TipoUsuario, Ciudad</text>
+<rect class="e" x="20" y="180" width="150" height="90" rx="4"/><text class="tn" x="95" y="205" text-anchor="middle">FUNDACION</text><text class="t" x="30" y="222">Id, UsuarioId (FK)</text><text class="t" x="30" y="237">NombreOrganizacion</text>
+<rect class="e" x="280" y="100" width="150" height="100" rx="4"/><text class="tn" x="355" y="125" text-anchor="middle">MASCOTA</text><text class="t" x="290" y="142">Id, FundacionId (FK)</text><text class="t" x="290" y="157">Especie, Edad, Tamano</text><text class="t" x="290" y="172">Estado, Ciudad</text>
+<rect class="e" x="530" y="100" width="170" height="100" rx="4"/><text class="tn" x="615" y="125" text-anchor="middle">SOLICITUD</text><text class="t" x="540" y="142">Id, MascotaId (FK)</text><text class="t" x="540" y="157">AdoptanteId (FK)</text><text class="t" x="540" y="172">Estado, Mensaje</text>
+<line class="l" x1="95" y1="120" x2="95" y2="180"/><text class="t" x="100" y="155">1:0..1</text>
+<line class="l" x1="170" y1="225" x2="280" y2="150"/><text class="t" x="210" y="178">1:N publica</text>
+<line class="l" x1="430" y1="150" x2="530" y2="150"/><text class="t" x="465" y="143">1:N recibe</text>
+<line class="l" x1="95" y1="75" x2="530" y2="130"/><text class="t" x="280" y="88">1:N solicita</text>
+</svg>
+</div>
+
+<div class="diagram page-break" id="s7c">
+<figcaption>Figura 2 — Máquina de estados: Solicitud de Adopción</figcaption>
+<svg viewBox="0 0 680 180" xmlns="http://www.w3.org/2000/svg" width="660">
+<style>.s{fill:#2E86AB;stroke:#1B3A5C;stroke-width:1.5}.sf{fill:#27AE60}.sr{fill:#C0392B}.st{font:10px Segoe UI,sans-serif;fill:#fff;font-weight:bold}.a{stroke:#666;stroke-width:1.2;fill:none;marker-end:url(#arr)}</style>
+<defs><marker id="arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#666"/></marker></defs>
+<circle cx="30" cy="90" r="12" fill="#1B3A5C"/><rect class="s" x="60" y="70" width="90" height="40" rx="20"/><text class="st" x="105" y="95" text-anchor="middle">Pendiente</text>
+<rect class="s" x="200" y="70" width="100" height="40" rx="20"/><text class="st" x="250" y="95" text-anchor="middle">EnRevision</text>
+<rect class="sf" x="360" y="30" width="90" height="40" rx="20"/><text class="st" x="405" y="55" text-anchor="middle">Aprobada</text>
+<rect class="sr" x="360" y="110" width="90" height="40" rx="20"/><text class="st" x="405" y="135" text-anchor="middle">Rechazada</text>
+<rect class="sf" x="520" y="30" width="100" height="40" rx="20"/><text class="st" x="570" y="55" text-anchor="middle">Completada</text>
+<path class="a" d="M150,90 L200,90"/><path class="a" d="M300,82 L360,50"/><path class="a" d="M300,98 L360,130"/><path class="a" d="M450,50 L520,50"/>
+<path class="a" d="M105,70 L105,50 L405,50" stroke-dasharray="4"/><text x="250" y="42" font-size="9" fill="#666">rechazo directo</text>
+</svg>
+</div>
+
+<h2 class="section page-break" id="s8">8. Diagrama de casos de uso</h2>
+<div class="diagram">
+<figcaption>Figura 3 — Diagrama de casos de uso</figcaption>
+<svg viewBox="0 0 720 420" xmlns="http://www.w3.org/2000/svg" width="700">
+<style>.actor{fill:#1B3A5C}.uc{fill:#E8F4F8;stroke:#2E86AB;stroke-width:1.5}.sys{fill:none;stroke:#1B3A5C;stroke-width:2;stroke-dasharray:6}.lbl{font:10px Segoe UI,sans-serif;fill:#2C3E50}.albl{font:11px Segoe UI,sans-serif;font-weight:bold;fill:#1B3A5C}</style>
+<rect class="sys" x="160" y="20" width="400" height="380" rx="8"/><text class="albl" x="360" y="42" text-anchor="middle">Sistema AdoptaAPI</text>
+<ellipse class="uc" cx="280" cy="80" rx="70" ry="22"/><text class="lbl" x="280" y="84" text-anchor="middle">Registrarse</text>
+<ellipse class="uc" cx="280" cy="130" rx="70" ry="22"/><text class="lbl" x="280" y="134" text-anchor="middle">Iniciar sesión</text>
+<ellipse class="uc" cx="440" cy="100" rx="80" ry="22"/><text class="lbl" x="440" y="104" text-anchor="middle">Publicar mascota</text>
+<ellipse class="uc" cx="280" cy="200" rx="85" ry="22"/><text class="lbl" x="280" y="204" text-anchor="middle">Buscar mascotas</text>
+<ellipse class="uc" cx="440" cy="200" rx="85" ry="22"/><text class="lbl" x="440" y="204" text-anchor="middle">Ver detalle</text>
+<ellipse class="uc" cx="280" cy="280" rx="95" ry="22"/><text class="lbl" x="280" y="284" text-anchor="middle">Enviar solicitud</text>
+<ellipse class="uc" cx="440" cy="280" rx="100" ry="22"/><text class="lbl" x="440" y="284" text-anchor="middle">Gestionar solicitudes</text>
+<ellipse class="uc" cx="360" cy="360" rx="90" ry="22"/><text class="lbl" x="360" y="364" text-anchor="middle">Ver reportes</text>
+<line x1="60" y1="100" x2="210" y2="100" stroke="#666"/><line x1="60" y1="200" x2="195" y2="200" stroke="#666"/><line x1="60" y1="280" x2="185" y2="280" stroke="#666"/>
+<circle class="actor" cx="40" cy="95" r="8"/><line x1="40" y1="103" x2="40" y2="130" stroke="#1B3A5C" stroke-width="2"/><line x1="25" y1="145" x2="55" y2="145" stroke="#1B3A5C" stroke-width="2"/>
+<text class="albl" x="40" y="165" text-anchor="middle">Adoptante</text>
+<circle class="actor" cx="620" cy="100" r="8"/><line x1="620" y1="108" x2="620" y2="135" stroke="#1B3A5C" stroke-width="2"/><line x1="605" y1="150" x2="635" y2="150" stroke="#1B3A5C" stroke-width="2"/>
+<text class="albl" x="620" y="170" text-anchor="middle">Fundación</text>
+<line x1="520" y1="100" x2="560" y2="100" stroke="#666"/><line x1="520" y1="280" x2="560" y2="280" stroke="#666"/><line x1="450" y1="360" x2="560" y2="360" stroke="#666"/>
+</svg>
+</div>
+
+<h2 class="section page-break" id="s9">9. Diagrama de clases</h2>
+<div class="diagram">
+<figcaption>Figura 4 — Diagrama de clases (Dominio + Servicios)</figcaption>
+<svg viewBox="0 0 720 480" xmlns="http://www.w3.org/2000/svg" width="700">
+<style>.cls{fill:#fff;stroke:#1B3A5C;stroke-width:1.5}.hi{fill:#1B3A5C}.ht{font:11px Segoe UI,sans-serif;fill:#fff;font-weight:bold}.ct{font:9px Consolas,monospace;fill:#2C3E50}.if{fill:#E8F4F8;stroke:#2E86AB;stroke-width:1.5;stroke-dasharray:4}.ln{stroke:#2E86AB;stroke-width:1.2;fill:none}</style>
+<rect class="cls" x="20" y="20" width="140" height="90"/><rect class="hi" x="20" y="20" width="140" height="22"/><text class="ht" x="90" y="36" text-anchor="middle">Usuario</text><text class="ct" x="28" y="58">+Id, Nombre, Email</text><text class="ct" x="28" y="72">+TipoUsuario, Ciudad</text><text class="ct" x="28" y="86">+Login(), Register()</text>
+<rect class="cls" x="20" y="150" width="140" height="90"/><rect class="hi" x="20" y="150" width="140" height="22"/><text class="ht" x="90" y="166" text-anchor="middle">Fundacion</text><text class="ct" x="28" y="188">+NombreOrganizacion</text><text class="ct" x="28" y="202">+PublicarMascota()</text><text class="ct" x="28" y="216">+GenerarReporte()</text>
+<rect class="cls" x="200" y="80" width="150" height="100"/><rect class="hi" x="200" y="80" width="150" height="22"/><text class="ht" x="275" y="96" text-anchor="middle">Mascota</text><text class="ct" x="208" y="118">+Especie, EdadMeses</text><text class="ct" x="208" y="132">+Tamano, Ciudad</text><text class="ct" x="208" y="146">+EstadoMascota</text><text class="ct" x="208" y="168">+ActualizarEstado()</text>
+<rect class="cls" x="400" y="80" width="160" height="100"/><rect class="hi" x="400" y="80" width="160" height="22"/><text class="ht" x="480" y="96" text-anchor="middle">SolicitudAdopcion</text><text class="ct" x="408" y="118">+EstadoSolicitud</text><text class="ct" x="408" y="132">+Mensaje, Fechas</text><text class="ct" x="408" y="154">+CambiarEstado()</text>
+<rect class="if" x="20" y="300" width="180" height="70"/><text class="ht" x="110" y="320" text-anchor="middle" fill="#2E86AB">«interface» IAuthService</text><text class="ct" x="28" y="340">+RegisterAsync()</text><text class="ct" x="28" y="354">+LoginAsync()</text>
+<rect class="if" x="220" y="300" width="190" height="70"/><text class="ht" x="315" y="320" text-anchor="middle" fill="#2E86AB">«interface» IMascotaService</text><text class="ct" x="228" y="340">+CreateAsync()</text><text class="ct" x="228" y="354">+GetByFiltersAsync()</text>
+<rect class="if" x="430" y="300" width="200" height="70"/><text class="ht" x="530" y="320" text-anchor="middle" fill="#2E86AB">«interface» ISolicitudService</text><text class="ct" x="438" y="340">+CreateAsync()</text><text class="ct" x="438" y="354">+ChangeStatusAsync()</text>
+<rect class="cls" x="20" y="400" width="140" height="60"/><rect class="hi" x="20" y="400" width="140" height="20"/><text class="ht" x="90" y="414" text-anchor="middle">AuthService</text><text class="ct" x="28" y="438">implements IAuthService</text>
+<rect class="cls" x="220" y="400" width="150" height="60"/><rect class="hi" x="220" y="400" width="150" height="20"/><text class="ht" x="295" y="414" text-anchor="middle">MascotaService</text><text class="ct" x="228" y="438">implements IMascotaService</text>
+<rect class="cls" x="430" y="400" width="160" height="60"/><rect class="hi" x="430" y="400" width="160" height="20"/><text class="ht" x="510" y="414" text-anchor="middle">SolicitudService</text><text class="ct" x="438" y="438">implements ISolicitudService</text>
+<line class="ln" x1="90" y1="110" x2="90" y2="150"/><text x="95" y="135" font-size="8" fill="#666">hereda</text>
+<line class="ln" x1="160" y1="195" x2="200" y2="130"/><text x="168" y="158" font-size="8" fill="#666">1..*</text>
+<line class="ln" x1="350" y1="130" x2="400" y2="130"/><text x="365" y="125" font-size="8" fill="#666">1..*</text>
+<line class="ln" x1="110" y1="370" x2="90" y2="400" stroke-dasharray="3"/><line class="ln" x1="315" y1="370" x2="295" y2="400" stroke-dasharray="3"/><line class="ln" x1="530" y1="370" x2="510" y2="400" stroke-dasharray="3"/>
+</svg>
+</div>
+
+<h2 class="section page-break" id="s10">10. Diagrama de secuencia</h2>
+<div class="diagram">
+<figcaption>Figura 5 — Secuencia: Solicitud de adopción y aprobación</figcaption>
+<svg viewBox="0 0 720 400" xmlns="http://www.w3.org/2000/svg" width="700">
+<style>.obj{fill:#E8F4F8;stroke:#1B3A5C;stroke-width:1.2}.lifeline{stroke:#AAA;stroke-width:1;stroke-dasharray:4}.msg{stroke:#2E86AB;stroke-width:1.5;fill:none;marker-end:url(#m)}.rlbl{font:9px Segoe UI,sans-serif;fill:#2C3E50}.nlbl{font:10px Segoe UI,sans-serif;font-weight:bold;fill:#1B3A5C}</style>
+<defs><marker id="m" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#2E86AB"/></marker></defs>
+<rect class="obj" x="10" y="10" width="70" height="28" rx="3"/><text class="nlbl" x="45" y="28" text-anchor="middle">Adoptante</text>
+<rect class="obj" x="110" y="10" width="60" height="28" rx="3"/><text class="nlbl" x="140" y="28" text-anchor="middle">MVC+JS</text>
+<rect class="obj" x="210" y="10" width="70" height="28" rx="3"/><text class="nlbl" x="245" y="28" text-anchor="middle">API Ctrl</text>
+<rect class="obj" x="320" y="10" width="80" height="28" rx="3"/><text class="nlbl" x="360" y="28" text-anchor="middle">SolService</text>
+<rect class="obj" x="440" y="10" width="60" height="28" rx="3"/><text class="nlbl" x="470" y="28" text-anchor="middle">Repo</text>
+<rect class="obj" x="540" y="10" width="70" height="28" rx="3"/><text class="nlbl" x="575" y="28" text-anchor="middle">SQL Server</text>
+<line class="lifeline" x1="45" y1="38" x2="45" y2="390"/><line class="lifeline" x1="140" y1="38" x2="140" y2="390"/><line class="lifeline" x1="245" y1="38" x2="245" y2="390"/><line class="lifeline" x1="360" y1="38" x2="360" y2="390"/><line class="lifeline" x1="470" y1="38" x2="470" y2="390"/><line class="lifeline" x1="575" y1="38" x2="575" y2="390"/>
+<path class="msg" d="M45,60 L140,75"/><text class="rlbl" x="55" y="68">1. Enviar solicitud</text>
+<path class="msg" d="M140,90 L245,105"/><text class="rlbl" x="150" y="98">2. POST /api/solicitudes</text>
+<path class="msg" d="M245,120 L360,135"/><text class="rlbl" x="255" y="128">3. CreateAsync()</text>
+<path class="msg" d="M360,150 L470,165"/><text class="rlbl" x="370" y="158">4. Validar mascota</text>
+<path class="msg" d="M470,180 L575,195"/><text class="rlbl" x="480" y="188">5. SELECT/UPDATE</text>
+<path class="msg" d="M575,210 L470,225" stroke="#27AE60"/><text class="rlbl" x="480" y="218">6. OK</text>
+<path class="msg" d="M470,240 L360,255" stroke="#27AE60"/><text class="rlbl" x="370" y="248">7. SolicitudDto</text>
+<path class="msg" d="M360,270 L245,285" stroke="#27AE60"/><text class="rlbl" x="255" y="278">8. 201 Created</text>
+<rect fill="#FFF3CD" stroke="#E67E22" x="100" y="300" width="520" height="80" rx="4"/>
+<text class="nlbl" x="360" y="320" text-anchor="middle" fill="#E67E22">Fundación aprueba solicitud</text>
+<path class="msg" d="M140,335 L245,350"/><text class="rlbl" x="150" y="343">PUT /solicitudes/{id}/estado Aprobada</text>
+<path class="msg" d="M360,365 L470,380"/><text class="rlbl" x="370" y="373">Rechazar otras + Mascota Adoptada</text>
+</svg>
+</div>
+
+<h2 class="section page-break" id="s11">11. Diagrama de componentes</h2>
+<div class="diagram">
+<figcaption>Figura 6 — Arquitectura en capas y despliegue Azure</figcaption>
+<svg viewBox="0 0 720 440" xmlns="http://www.w3.org/2000/svg" width="700">
+<style>.layer{fill:#F8FBFD;stroke:#1B3A5C;stroke-width:2}.comp{fill:#E8F4F8;stroke:#2E86AB;stroke-width:1.2}.cloud{fill:#FFF8E8;stroke:#E67E22;stroke-width:2}.lt{font:11px Segoe UI,sans-serif;font-weight:bold;fill:#1B3A5C}.ct{font:9px Segoe UI,sans-serif;fill:#2C3E50}</style>
+<rect class="layer" x="20" y="20" width="680" height="70" rx="6"/><text class="lt" x="360" y="40" text-anchor="middle">CAPA DE PRESENTACIÓN</text>
+<rect class="comp" x="40" y="50" width="120" height="30" rx="3"/><text class="ct" x="100" y="69" text-anchor="middle">AdoptaAPI.Web (MVC)</text>
+<rect class="comp" x="180" y="50" width="100" height="30" rx="3"/><text class="ct" x="230" y="69" text-anchor="middle">JavaScript</text>
+<rect class="comp" x="300" y="50" width="100" height="30" rx="3"/><text class="ct" x="350" y="69" text-anchor="middle">Swagger UI</text>
+<rect class="comp" x="420" y="50" width="100" height="30" rx="3"/><text class="ct" x="470" y="69" text-anchor="middle">Figma Mockups</text>
+<rect class="layer" x="20" y="110" width="680" height="80" rx="6"/><text class="lt" x="360" y="130" text-anchor="middle">CAPA API</text>
+<rect class="comp" x="40" y="145" width="110" height="30" rx="3"/><text class="ct" x="95" y="164" text-anchor="middle">AuthController</text>
+<rect class="comp" x="165" y="145" width="120" height="30" rx="3"/><text class="ct" x="225" y="164" text-anchor="middle">MascotasController</text>
+<rect class="comp" x="300" y="145" width="130" height="30" rx="3"/><text class="ct" x="365" y="164" text-anchor="middle">SolicitudesController</text>
+<rect class="comp" x="445" y="145" width="120" height="30" rx="3"/><text class="ct" x="505" y="164" text-anchor="middle">ReportesController</text>
+<rect class="comp" x="580" y="145" width="100" height="30" rx="3"/><text class="ct" x="630" y="164" text-anchor="middle">JWT Middleware</text>
+<rect class="layer" x="20" y="210" width="680" height="80" rx="6"/><text class="lt" x="360" y="230" text-anchor="middle">CAPA BUSINESS LOGIC</text>
+<rect class="comp" x="40" y="245" width="100" height="30" rx="3"/><text class="ct" x="90" y="264" text-anchor="middle">AuthService</text>
+<rect class="comp" x="155" y="245" width="110" height="30" rx="3"/><text class="ct" x="210" y="264" text-anchor="middle">MascotaService</text>
+<rect class="comp" x="280" y="245" width="120" height="30" rx="3"/><text class="ct" x="340" y="264" text-anchor="middle">SolicitudService</text>
+<rect class="comp" x="415" y="245" width="110" height="30" rx="3"/><text class="ct" x="470" y="264" text-anchor="middle">ReporteService</text>
+<rect class="comp" x="540" y="245" width="140" height="30" rx="3"/><text class="ct" x="610" y="264" text-anchor="middle">Validators + AutoMapper</text>
+<rect class="layer" x="20" y="310" width="680" height="60" rx="6"/><text class="lt" x="360" y="330" text-anchor="middle">CAPA DATA ACCESS</text>
+<rect class="comp" x="80" y="335" width="140" height="28" rx="3"/><text class="ct" x="150" y="353" text-anchor="middle">Repositories (EF Core)</text>
+<rect class="comp" x="280" y="335" width="160" height="28" rx="3"/><text class="ct" x="360" y="353" text-anchor="middle">AdoptaDbContext</text>
+<rect class="cloud" x="200" y="385" width="320" height="45" rx="6"/><text class="lt" x="360" y="405" text-anchor="middle" fill="#E67E22">AZURE — App Service + SQL Database + Key Vault</text>
+<line x1="360" y1="370" x2="360" y2="385" stroke="#E67E22" stroke-width="2" marker-end="url(#arr2)"/>
+<defs><marker id="arr2" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#E67E22"/></marker></defs>
+</svg>
+</div>
+
+<h2 class="section page-break" id="s12">12. Matriz de trazabilidad</h2>
+<table>
+<tr><th>Objetivo</th><th>Épica</th><th>Historia</th><th>Tareas</th><th>Diagrama</th><th>Entregable</th></tr>
+<tr><td>OE-01</td><td>E-05</td><td>HU-12</td><td>T-04, T-25</td><td>§11 Componentes</td><td>Swagger UI + OpenAPI</td></tr>
+<tr><td>OE-02</td><td>E-02</td><td>HU-05</td><td>T-10</td><td>§10 Secuencia</td><td>GET /api/mascotas filtros</td></tr>
+<tr><td>OE-03</td><td>E-03</td><td>HU-08, HU-09</td><td>T-16–T-18</td><td>§7 Estados, §10</td><td>Máquina de estados</td></tr>
+<tr><td>OE-04</td><td>E-04</td><td>HU-11</td><td>T-19</td><td>§9 Clases</td><td>Reportes fundación</td></tr>
+<tr><td>OE-05</td><td>E-05, E-06</td><td>HU-12, HU-13</td><td>T-25, T-28</td><td>§11</td><td>Swagger + Figma</td></tr>
+<tr><td>—</td><td>E-01</td><td>HU-01–03</td><td>T-07, T-08, T-13</td><td>§8 Casos de uso</td><td>Auth JWT</td></tr>
+<tr><td>—</td><td>E-02</td><td>HU-04–07</td><td>T-09–T-12</td><td>§7 ER, §9</td><td>CRUD Mascotas</td></tr>
+</table>
+
+<h2 class="section" id="s13">13. Apéndice — Endpoints REST</h2>
+<table>
+<tr><th>Método</th><th>Ruta</th><th>Auth</th><th>Rol</th><th>Historia</th></tr>
+<tr><td>POST</td><td>/api/auth/register</td><td>No</td><td>—</td><td>HU-01, HU-02</td></tr>
+<tr><td>POST</td><td>/api/auth/login</td><td>No</td><td>—</td><td>HU-03</td></tr>
+<tr><td>GET</td><td>/api/mascotas</td><td>No</td><td>—</td><td>HU-05</td></tr>
+<tr><td>GET</td><td>/api/mascotas/{id}</td><td>No</td><td>—</td><td>HU-07</td></tr>
+<tr><td>POST</td><td>/api/mascotas</td><td>Sí</td><td>Fundación</td><td>HU-04</td></tr>
+<tr><td>PUT</td><td>/api/mascotas/{id}</td><td>Sí</td><td>Fundación</td><td>HU-06</td></tr>
+<tr><td>DELETE</td><td>/api/mascotas/{id}</td><td>Sí</td><td>Fundación</td><td>HU-06</td></tr>
+<tr><td>POST</td><td>/api/solicitudes</td><td>Sí</td><td>Adoptante</td><td>HU-08</td></tr>
+<tr><td>GET</td><td>/api/solicitudes/mis-solicitudes</td><td>Sí</td><td>Adoptante</td><td>HU-10</td></tr>
+<tr><td>GET</td><td>/api/solicitudes/fundacion</td><td>Sí</td><td>Fundación</td><td>HU-09</td></tr>
+<tr><td>PUT</td><td>/api/solicitudes/{id}/estado</td><td>Sí</td><td>Fundación</td><td>HU-09</td></tr>
+<tr><td>GET</td><td>/api/reportes/fundacion</td><td>Sí</td><td>Fundación</td><td>HU-11</td></tr>
+</table>
+
+<div class="footer">
+<p><strong>AdoptaAPI</strong> — Informe de Proyecto v1.0 · Agosto 2026</p>
+<p>Samanta Rojas · Killiam García · Jonnathan Rey · Santiago Cuervo</p>
+<p>ASP.NET Core MVC 8 · SQL Server · Azure · Agile/Scrum</p>
+</div>
+
+</div>
+</body>
+</html>
+
+</div>
+</body>
+</html>

@@ -1,4 +1,4 @@
-{
+﻿{
   "openapi": "3.0.1",
   "info": {
     "title": "AdoptaAPI",
@@ -78,37 +78,6 @@
                 }
               }
             }
-          }
-        }
-      }
-    },
-    "/api/Pedido": {
-      "post": {
-        "tags": [
-          "Pedido"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Pedido"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Pedido"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/Pedido"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
           }
         }
       }
@@ -212,20 +181,6 @@
               "$ref": "#/components/schemas/SolicitudAdopcion"
             },
             "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Pedido": {
-        "type": "object",
-        "properties": {
-          "producto": {
-            "type": "string",
-            "nullable": true
-          },
-          "precio": {
-            "type": "number",
-            "format": "double"
           }
         },
         "additionalProperties": false

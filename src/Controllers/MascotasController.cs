@@ -1,9 +1,9 @@
-using ApisPedido.Data;
-using ApisPedido.Models;
+using AdoptaAPI.Data;
+using AdoptaAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace ApisPedido.Controllers
+namespace AdoptaAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
