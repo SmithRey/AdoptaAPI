@@ -82,6 +82,54 @@
         }
       }
     },
+    "/api/Pedido": {
+      "post": {
+        "tags": [
+          "Pedido"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PedidoAdopcion"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PedidoAdopcion"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PedidoAdopcion"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolicitudAdopcion"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolicitudAdopcion"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolicitudAdopcion"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Salud": {
       "get": {
         "tags": [
@@ -180,6 +228,24 @@
             "items": {
               "$ref": "#/components/schemas/SolicitudAdopcion"
             },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PedidoAdopcion": {
+        "type": "object",
+        "properties": {
+          "idMascota": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idUsuario": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "mensaje": {
+            "type": "string",
             "nullable": true
           }
         },

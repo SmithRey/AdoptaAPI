@@ -12,3 +12,14 @@ Accept: application/json
 
 GET {{AdoptaAPI_HostAddress}}/api/mascotas/disponibles
 Accept: application/json
+
+###
+
+POST {{AdoptaAPI_HostAddress}}/api/pedido
+Content-Type: application/json
+
+{
+  "idMascota": 6,
+  "idUsuario": 5,
+  "mensaje": "Me encantaria adoptar a Pelusa"
+}

@@ -52,6 +52,7 @@ dotnet ef database update
 | GET | `/api/salud` | Health check (no necesita SQL) |
 | GET | `/api/mascotas` | Lista mascotas (EF Core) |
 | GET | `/api/mascotas/disponibles` | Solo estado Disponible |
+| POST | `/api/pedido` | Crea una solicitud de adopción |
 
 ## Estructura
 
@@ -60,8 +61,8 @@ AdoptaAPI/
   AdoptaAPI.sln
   AdoptaApi.sql
   src/
-    Controllers/    Salud, Mascotas
-    Models/         Usuario, Fundacion, Mascota, SolicitudAdopcion
+    Controllers/    Salud, Mascotas, Pedido (solicitud de adopción)
+    Models/         Usuario, Fundacion, Mascota, SolicitudAdopcion, PedidoAdopcion
     Data/           AdoptaDbContext + migraciones
     Program.cs      Swagger + EF Core
   docs/
